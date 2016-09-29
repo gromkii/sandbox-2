@@ -12,6 +12,8 @@ main {
 
 .black-background {
   background-color: #333;
-  color: #fde; }
+  color: #ddd; }
+  .black-background:hover {
+    color: #ddd; }
 
 /*# sourceMappingURL=style.css.map */

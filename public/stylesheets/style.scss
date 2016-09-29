@@ -14,5 +14,8 @@ main {
 
 .black-background {
   background-color: #333;
-  color:#fde;
+  color:#ddd;
+    &:hover {
+      color:#ddd;
+    }
 }

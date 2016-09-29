@@ -8,6 +8,7 @@ const express = require('express'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   bcrypt = require('bcrypt'),
+  User = require('./models/user'),
   session = require('express-session');
 
 // --- Middleware --- //

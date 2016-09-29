@@ -4,6 +4,8 @@ class LoginForm extends React.Component {
   render(){
     return (
       <section>
+        <h1 className="text-center">User Login</h1>
+
         <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2">
           <fieldset className="form-group">
             <label>Username</label>
@@ -20,10 +22,9 @@ class LoginForm extends React.Component {
             <a href="" className="btn btn-success form-control">Click here to register!</a>
           </div>
           <div className="form-group">
-            <a href="" className="btn btn-warning form-control"><i className="fa fa-github-alt" aria-hidden="true"></i> Sign In with GitHub!</a>
+            <a href="" className="btn black-background form-control"><i className="fa fa-github-alt" aria-hidden="true"></i> Sign In with GitHub!</a>
           </div>
         </form>
-
       </section>
     )
   }
