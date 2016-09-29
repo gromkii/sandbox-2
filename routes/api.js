@@ -7,7 +7,11 @@ const express = require('express'),
 router.route('/users')
   //Return list of all users.
   .get((req, res) => {
-
+    User
+      .fetchAll()
+      .then( results => {
+        res.json(results.toJSON());
+      })
   })
   //Create new user.
   .post((req, res) => {
