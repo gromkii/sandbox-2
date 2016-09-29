@@ -4,6 +4,7 @@ const express = require('express'),
   app = express(),
   port = process.env.PORT || 3000,
   api = require('./routes/api.js'),
+  auth = require('./routes/auth.js'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   bcrypt = require('bcrypt'),
@@ -12,7 +13,7 @@ const express = require('express'),
 // --- Middleware --- //
 
 app.use(express.static('public'));
-app.use('/api', api);
+
 
 // --- Passport Strategy --- //
 
@@ -55,12 +56,10 @@ passport.deserializeUser((id, done) => {
 
 // --- Auth --- //
 
-function auth(req, res, next){
-  !req.isAuthenticated() ? res.send(401) : next()
-}
 
 // --- Routing --- //
-
+app.use('/api', api)
+  .use('/auth', auth)
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/views/index.html');
 })

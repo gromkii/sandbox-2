@@ -1,0 +1,17 @@
+body {
+  background-image: url("https://hd.unsplash.com/uploads/1411599070526e808c923/239f12cc");
+  background-size: cover;
+  background-position: top; }
+
+main {
+  background-color: #fde;
+  border-radius: 5px;
+  margin: 50px;
+  padding: 20px;
+  box-shadow: 0 5px 5px #444; }
+
+.black-background {
+  background-color: #333;
+  color: #fde; }
+
+/*# sourceMappingURL=style.css.map */
