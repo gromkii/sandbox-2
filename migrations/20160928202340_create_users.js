@@ -2,9 +2,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('users', t => {
     t.string('username'),
+    t.string('email'),
     t.text('password'),
     t.text('about_me'),
-    t.text('profile_url')
+    t.text('profile_url'),
+    t.timestamps()
   })
 };
 
