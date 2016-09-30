@@ -69,6 +69,7 @@ class ShowUser extends React.Component {
       email:'',
       about_me:'',
       profile_url:'',
+      full_name:''
     }
   }
 
@@ -86,13 +87,17 @@ class ShowUser extends React.Component {
     let u = this.props.user;
 
     this.setState({
-      user: u
+      user: u,
       username:u.username,
       email:u.email,
       about_me:u.about_me,
-      profile_url:u.profile_url
+      profile_url:u.profile_url,
+      full_name:u.full_name
     });
+  }
 
+  _editProfile(){
+    ReactDOM.render(<EditUser user={this.state.user} />, document.getElementById('app'));
   }
 
   render(){
@@ -100,9 +105,9 @@ class ShowUser extends React.Component {
       <section className="row">
         <div className="col-md-6 profile">
           <h1>{this.state.username}</h1>
+          <h3>{this.state.full_name}</h3>
           <p>{this.state.about_me}</p>
-          <button className="btn btn-success">Edit Profile</button>
-          <button className="btn btn-warning">Logout</button>
+          <button className="btn btn-success" onClick={this._editProfile.bind(this)}>Edit Profile</button>
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>
@@ -114,19 +119,87 @@ class ShowUser extends React.Component {
 }
 
 class EditUser extends React.Component {
+  constructor(){
+    super()
+
+    this.state = {
+      user:{},
+      username:'',
+      email:'',
+      about_me:'',
+      profile_url:'',
+      full_name:''
+    }
+  }
+
+  componentWillMount(){
+    let u = this.props.user;
+
+    console.log(u);
+
+    this.setState({
+      user: u,
+      username:u.username,
+      email:u.email,
+      about_me:u.about_me,
+      profile_url:u.profile_url,
+      full_name:u.full_name
+    });
+
+    console.log(this.state.profile_url);
+  }
+
+  _handleChange(event){
+    console.log(event.target);
+  }
+
+  _handleSubmit(event){
+    event.preventDefault();
+    let t = event.target;
+
+    let data = {
+      full_name:t.full_name.value,
+      about_me:t.about_me.value,
+      profile_url:t.profile_url.value
+    }
+
+    $.ajax({
+      method:'PUT',
+      url:`/api/users/${this.props.user.id}`,
+      data:data
+    }).done( results => {
+      console.log(results);
+    })
+
+    console.log(data);
+  }
+
   render(){
-    <section>
-      <form action="user/user_id?_method:PUT" method="POST" className="form">
-        <fieldset className="form-group">
-          <label>Change Username</label>
-          <input type="text" className="form-control" value={this.state.username} />
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Change Username</label>
-          <input type="text" className="form-control" value={this.state.username} />
-        </fieldset>
-      </form>
-    </section>
+    return (
+      <section>
+        <form action="user/user_id?_method:PUT" method="POST" className="form" onSubmit={this._handleSubmit.bind(this)}>
+          <fieldset className="form-group">
+            <label>Change Name</label>
+            <input type="text" className="form-control" defaultValue={this.state.full_name} name="full_name"/>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Change About Me</label>
+            <textarea className="form-control" defaultValue={this.state.about_me} name="about_me"></textarea>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Change Image Url</label>
+            <input type="text" className="form-control" defaultValue={this.state.profile_url} name="profile_url"/>
+          </fieldset>
+
+
+          <button type="submit" className="btn btn-lg btn-primary">Update Information</button>
+        </form>
+
+
+      </section>
+    )
   }
 }
 
