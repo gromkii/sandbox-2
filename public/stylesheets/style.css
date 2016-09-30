@@ -16,4 +16,8 @@ main {
   .black-background:hover {
     color: #ddd; }
 
+.profile .btn {
+  margin: 5px;
+  padding: 5px; }
+
 /*# sourceMappingURL=style.css.map */

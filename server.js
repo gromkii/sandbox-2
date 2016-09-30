@@ -27,7 +27,6 @@ app.use(passport.initialize())
   .use(passport.session());
 
 passport.use(new LocalStrategy((username, password, done) => {
-  console.log('Testing');
   User
     .where('username', username)
     .fetch()

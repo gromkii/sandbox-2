@@ -45,7 +45,7 @@ class ShowUser extends React.Component {
   _getUser(){
     $.ajax({
       method:'GET',
-      url:'/api/users/1'
+      url:'/auth/user'
     }).done( results => {
       let u = results;
       this.setState({
@@ -66,16 +66,19 @@ class ShowUser extends React.Component {
   render(){
     return (
       <section className="row">
-        <div className="col-md-6">
+        <div className="col-md-6 profile">
           <h1>{this.state.username}</h1>
           <p>{this.state.about_me}</p>
+          <button className="btn btn-success">Edit Profile</button>
+          <button className="btn btn-warning">Logout</button>
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>
         </div>
-      </section>
+
+        </section>
     )
   }
 }
 
-ReactDOM.render(<ShowUser />, document.getElementById('app'));
+ReactDOM.render(<LoginForm />, document.getElementById('app'));

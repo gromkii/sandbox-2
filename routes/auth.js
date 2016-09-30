@@ -9,8 +9,17 @@ router.post('/login', passport.authenticate('local', { failureRedirect:'/auth/fa
   res.json({message:'Success!'});
 })
 
+/*
+  This route allows you to access the current signed in user's
+  information, which is makes it easier to populate the user
+  profile page. If there is no current user, an error message is
+  returned.
+*/
 router.get('/user', (req, res) => {
-  res.json(res.user);
+  if (req.user) {
+    res.json(req.user)
+  }
+  res.json({error:'No user found.'});
 })
 
 router.route('/fail')
