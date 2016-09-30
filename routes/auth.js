@@ -5,11 +5,13 @@ const express = require('express'),
   User = require('../models/user'),
   passport = require('passport');
 
-router.route('/login')
-  .post(passport.authenticate('local', {
-    successRedirect:'/',
-    failureRedirect:'/auth/fail`'
-  }))
+router.post('/login', passport.authenticate('local', { failureRedirect:'/auth/fail'}), (req, res) => {
+  res.json({message:'Success!'});
+})
+
+router.get('/user', (req, res) => {
+  res.json(res.user);
+})
 
 router.route('/fail')
   .get((req, res) => {

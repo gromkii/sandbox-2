@@ -47,7 +47,13 @@ class ShowUser extends React.Component {
       method:'GET',
       url:'/api/users/1'
     }).done( results => {
-      console.log(results);
+      let u = results;
+      this.setState({
+        username:u.username,
+        email:u.email,
+        about_me:u.about_me,
+        profile_url:u.profile_url
+      });
     })
 
   }
@@ -58,9 +64,16 @@ class ShowUser extends React.Component {
   }
 
   render(){
-    // Render page that shows all information.\
     return (
-      <h1>Hey.</h1>
+      <section className="row">
+        <div className="col-md-6">
+          <h1>{this.state.username}</h1>
+          <p>{this.state.about_me}</p>
+        </div>
+        <div className="col-md-6">
+          <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>
+        </div>
+      </section>
     )
   }
 }

@@ -9,11 +9,16 @@ const express = require('express'),
   LocalStrategy = require('passport-local').Strategy,
   bcrypt = require('bcrypt'),
   User = require('./models/user'),
-  session = require('express-session');
+  session = require('express-session'),
+  bodyParser = require('body-parser'),
+  methodOverride = require('method-override');
 
 // --- Middleware --- //
 
-app.use(express.static('public'));
+app.use(express.static('public'))
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({extended:false}))
+  .use(methodOverride('_method'));
 
 
 // --- Passport Strategy --- //
@@ -22,10 +27,12 @@ app.use(passport.initialize())
   .use(passport.session());
 
 passport.use(new LocalStrategy((username, password, done) => {
+  console.log('Testing');
   User
     .where('username', username)
-    .fetch({withRelated: ['userGroup']})
+    .fetch()
     .then( user => {
+      console.log(user.toJSON());
       if (user) {
         user = user.toJSON();
       }
