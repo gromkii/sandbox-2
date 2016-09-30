@@ -116,8 +116,15 @@ class ShowUser extends React.Component {
 class EditUser extends React.Component {
   render(){
     <section>
-      <form action="user/user_id?_method:PUT" method="POST">
-
+      <form action="user/user_id?_method:PUT" method="POST" className="form">
+        <fieldset className="form-group">
+          <label>Change Username</label>
+          <input type="text" className="form-control" value={this.state.username} />
+        </fieldset>
+        <fieldset className="form-group">
+          <label>Change Username</label>
+          <input type="text" className="form-control" value={this.state.username} />
+        </fieldset>
       </form>
     </section>
   }
