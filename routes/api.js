@@ -25,9 +25,9 @@ router.route('/users')
       profile_url:newUser.profile_url,
       password: hash,
       about_me:newUser.about_me
-    }).save().then(() => {
-      // After creating new account, return to index.
-      res.redirect('/');
+    }).save().then( results => {
+      // After creating new account, return to new user info.
+      res.json({user:results.toJSON()})
     });
   })
 

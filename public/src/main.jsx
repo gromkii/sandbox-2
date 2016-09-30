@@ -1,5 +1,7 @@
 'use strict'
 
+
+
 class LoginForm extends React.Component {
   constructor(){
     super()
@@ -28,6 +30,10 @@ class LoginForm extends React.Component {
       })
   }
 
+  _newUser(){
+    ReactDOM.render(<NewUser />, document.getElementById('app'));
+  }
+
   render(){
     return (
       <section>
@@ -46,17 +52,18 @@ class LoginForm extends React.Component {
           <fieldset className="form-group">
             <button type="submit" className="btn btn-primary form-control">Login</button>
           </fieldset>
-          <div className="form-group">
-            <a href="" className="btn btn-success form-control">Click here to register!</a>
-          </div>
-          <div className="form-group">
-            <a href="" className="btn black-background form-control"><i className="fa fa-github-alt" aria-hidden="true"></i> Sign In with GitHub!</a>
-          </div>
+
         </form>
+
+        <div className="form-group col-md-8 col-md-offset-2">
+          <button className="btn btn-success form-control" onClick={this._newUser.bind(this)}>Click here to register!</button>
+        </div>
       </section>
     )
   }
 }
+
+ReactDOM.render(<LoginForm />, document.getElementById('app'));
 
 class ShowUser extends React.Component {
   constructor(){
@@ -102,6 +109,7 @@ class ShowUser extends React.Component {
   render(){
     return (
       <section className="row">
+        <h1 className="text-center">User Profile</h1>
         <div className="col-md-6 profile">
           <h1>{this.state.username}</h1>
           <h3>{this.state.full_name}</h3>
@@ -203,4 +211,73 @@ class EditUser extends React.Component {
   }
 }
 
-ReactDOM.render(<LoginForm />, document.getElementById('app'));
+class NewUser extends React.Component {
+  _handleSubmit(event){
+    event.preventDefault();
+
+    console.log(event.target);
+
+    let t = event.target;
+
+
+    let data = {
+      username:t.username.value,
+      password:t.password.value,
+      email:t.email.value,
+      full_name:t.full_name.value,
+      about_me:t.about_me.value,
+      profile_url:t.profile_url.value,
+    }
+
+    console.log(data);
+
+    $.ajax({
+      method:'POST',
+      url:'/api/users',
+      data:data
+    }).done(results => {
+      if (results.user) {
+        ReactDOM.render(<ShowUser user={results.user} />, document.getElementById('app'));
+      } else {
+        console.log('Error!');
+      }
+    })
+  }
+
+  render(){
+    return (
+      <section>
+        <form className="col-md-8 col-md-offset-2" onSubmit={this._handleSubmit.bind(this)}>
+          <fieldset className="form-group">
+            <label>Username</label>
+            <input type="text" className="form-control" name="username"/>
+          </fieldset>
+          <fieldset className="form-group">
+            <label>Password</label>
+            <input type="password" className="form-control" name="password"/>
+          </fieldset>
+          <fieldset className="form-group">
+            <label>Email</label>
+            <input type="text" className="form-control" name="email"/>
+          </fieldset>
+          <fieldset className="form-group">
+            <label>Full Name</label>
+            <input type="text" className="form-control" name="full_name"/>
+          </fieldset>
+          <fieldset className="form-group">
+            <label>Profile Image Url</label>
+            <input type="text" className="form-control" name="profile_url"/>
+          </fieldset>
+          <fieldset className="form-group">
+            <label>About Me</label>
+            <textarea className="form-control" name="about_me"></textarea>
+          </fieldset>
+
+          <button type="submit" className="btn btn-success">
+            Register New Account
+          </button>
+        </form>
+      </section>
+    )
+  }
+}
