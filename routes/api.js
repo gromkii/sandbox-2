@@ -55,7 +55,10 @@ router.route('/users/:user_id')
       })
       .then( results => {
         console.log(results.toJSON());
-        res.json({message:'Updated successfully.'});
+        res.json({
+          message:'Updated successfully.',
+          user:results.toJSON()
+        });
       })
   })
 

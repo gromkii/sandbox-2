@@ -23,7 +23,6 @@ class LoginForm extends React.Component {
     $.post('/auth/login', data)
       .done( results => {
         if(results.message){
-          console.log(results);
           ReactDOM.render(<ShowUser user = {results.user} />, document.getElementById('app'));
         }
       })
@@ -146,11 +145,10 @@ class EditUser extends React.Component {
       full_name:u.full_name
     });
 
-    console.log(this.state.profile_url);
   }
 
   _handleChange(event){
-    console.log(event.target);
+
   }
 
   _handleSubmit(event){
@@ -168,10 +166,12 @@ class EditUser extends React.Component {
       url:`/api/users/${this.props.user.id}`,
       data:data
     }).done( results => {
-      console.log(results);
+
+      if(results.message){
+        ReactDOM.render(<ShowUser user={results.user} />, document.getElementById('app'));
+      }
     })
 
-    console.log(data);
   }
 
   render(){
