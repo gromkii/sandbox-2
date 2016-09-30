@@ -1,19 +1,45 @@
 'use strict'
 
 class LoginForm extends React.Component {
+  constructor(){
+    super()
+
+    this.state({
+      username:'',
+      password:''
+    })
+  }
+
+  _handleSubmit(e){
+    e.preventDefault();
+    this.setState({
+
+    })
+
+    $.ajax({
+      method:'POST',
+      url:'/auth/login',
+      data:{
+
+      }
+    }).done( user => {
+
+    })
+  }
+
   render(){
     return (
       <section>
         <h1 className="text-center">User Login</h1>
 
-        <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2">
+        <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2" onSubmit={this._handleSubmit.bind(this)}>
           <fieldset className="form-group">
             <label>Username</label>
-            <input type="text" name="username" className="form-control" />
+            <input type="text" name="username" className="form-control" value={this.state.username}/>
           </fieldset>
           <fieldset className="form-group">
             <label>Password</label>
-            <input type="password" name="password" className="form-control" />
+            <input type="password" name="password" className="form-control" value={this.state.password}/>
           </fieldset>
           <fieldset className="form-group">
             <button type="submit" className="btn btn-primary form-control">Login</button>

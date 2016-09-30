@@ -6,7 +6,7 @@ const express = require('express'),
   passport = require('passport');
 
 router.post('/login', passport.authenticate('local', { failureRedirect:'/auth/fail'}), (req, res) => {
-  res.json({message:'Success!'});
+  
 })
 
 /*
@@ -22,6 +22,10 @@ router.get('/user', (req, res) => {
   res.json({error:'No user found.'});
 })
 
+
+/*
+  If the login fails, returns error message.
+*/
 router.route('/fail')
   .get((req, res) => {
     res.json({error:"Something went wrong."});
