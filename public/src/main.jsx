@@ -30,4 +30,39 @@ class LoginForm extends React.Component {
   }
 }
 
-ReactDOM.render(<LoginForm />, document.getElementById('app'));
+class ShowUser extends React.Component {
+  constructor(){
+    super()
+
+    this.state = {
+      username:'',
+      email:'',
+      about_me:'',
+      profile_url:'',
+    }
+  }
+
+  _getUser(){
+    $.ajax({
+      method:'GET',
+      url:'/api/users/1'
+    }).done( results => {
+      console.log(results);
+    })
+
+  }
+
+  componentDidMount(){
+    this._getUser();
+    // Set the state.
+  }
+
+  render(){
+    // Render page that shows all information.\
+    return (
+      <h1>Hey.</h1>
+    )
+  }
+}
+
+ReactDOM.render(<ShowUser />, document.getElementById('app'));

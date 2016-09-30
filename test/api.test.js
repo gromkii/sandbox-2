@@ -15,4 +15,16 @@ describe('Testing Connection', () => {
         done();
       })
   })
+
+  it('Should return seeded users.', done => {
+    // According to the seed file, there should be 3 users.
+    request
+      .get('/')
+      .expect(200)
+      .end((err, res) => {
+        let users = res.body;
+        expect(users.length).to.eq(3);
+        done()
+      })
+  })
 })
