@@ -49,12 +49,11 @@ router.route('/users/:user_id')
     User
       .forge({id:req.params.user_id})
       .save({
-        email:u.email,
-        about_me:u.email,
+        full_name:u.full_name,
+        about_me:u.about_me,
         profile_url:u.profile_url
       })
       .then( results => {
-        console.log(results.toJSON());
         res.json({
           message:'Updated successfully.',
           user:results.toJSON()
