@@ -6,7 +6,10 @@ const express = require('express'),
   passport = require('passport');
 
 router.post('/login', passport.authenticate('local', { failureRedirect:'/auth/fail'}), (req, res) => {
-  
+  res.json({
+    message:'Did the thing.',
+    user:req.user
+  });
 })
 
 /*

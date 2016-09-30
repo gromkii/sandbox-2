@@ -4,27 +4,29 @@ class LoginForm extends React.Component {
   constructor(){
     super()
 
-    this.state({
+    this.state = {
       username:'',
       password:''
-    })
+    }
   }
 
   _handleSubmit(e){
     e.preventDefault();
-    this.setState({
+    let data = {
+      username: e.target.username.value,
+      password: e.target.password.value
+    }
+    this._postLogin(data);
+  }
 
-    })
-
-    $.ajax({
-      method:'POST',
-      url:'/auth/login',
-      data:{
-
-      }
-    }).done( user => {
-
-    })
+  _postLogin(data){
+    $.post('/auth/login', data)
+      .done( results => {
+        if(results.message){
+          console.log(results);
+          ReactDOM.render(<ShowUser user = {results.user} />, document.getElementById('app'));
+        }
+      })
   }
 
   render(){
@@ -32,14 +34,15 @@ class LoginForm extends React.Component {
       <section>
         <h1 className="text-center">User Login</h1>
 
-        <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2" onSubmit={this._handleSubmit.bind(this)}>
+        <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2"
+          onSubmit={this._handleSubmit.bind(this)}>
           <fieldset className="form-group">
             <label>Username</label>
-            <input type="text" name="username" className="form-control" value={this.state.username}/>
+            <input type="text" name="username" className="form-control"/>
           </fieldset>
           <fieldset className="form-group">
             <label>Password</label>
-            <input type="password" name="password" className="form-control" value={this.state.password}/>
+            <input type="password" name="password" className="form-control"/>
           </fieldset>
           <fieldset className="form-group">
             <button type="submit" className="btn btn-primary form-control">Login</button>
@@ -61,6 +64,7 @@ class ShowUser extends React.Component {
     super()
 
     this.state = {
+      user:{},
       username:'',
       email:'',
       about_me:'',
@@ -73,20 +77,22 @@ class ShowUser extends React.Component {
       method:'GET',
       url:'/auth/user'
     }).done( results => {
-      let u = results;
-      this.setState({
-        username:u.username,
-        email:u.email,
-        about_me:u.about_me,
-        profile_url:u.profile_url
-      });
-    })
+      console.log(results);
+    });
 
   }
 
-  componentDidMount(){
-    this._getUser();
-    // Set the state.
+  componentWillMount(){
+    let u = this.props.user;
+
+    this.setState({
+      user: u
+      username:u.username,
+      email:u.email,
+      about_me:u.about_me,
+      profile_url:u.profile_url
+    });
+
   }
 
   render(){
@@ -104,6 +110,16 @@ class ShowUser extends React.Component {
 
         </section>
     )
+  }
+}
+
+class EditUser extends React.Component {
+  render(){
+    <section>
+      <form action="user/user_id?_method:PUT" method="POST">
+
+      </form>
+    </section>
   }
 }
 

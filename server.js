@@ -31,7 +31,6 @@ passport.use(new LocalStrategy((username, password, done) => {
     .where('username', username)
     .fetch()
     .then( user => {
-      console.log(user.toJSON());
       if (user) {
         user = user.toJSON();
       }
