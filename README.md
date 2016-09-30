@@ -23,3 +23,9 @@ wanted to push myself to try to make a small application in React with scalabili
 mind. This was my first attempt at really making a single page app with React, and in
 doing so I have learned a lot about the framework and I am excited to work on more
 projects with it in the future.
+
+## Challenges
+
+Having to learn React in such a short amount of time was my main obstacle to overcome
+for this project. The biggest take away from doing all of this was how to store
+information in a react components state, especially from AJAX calls to an API.
