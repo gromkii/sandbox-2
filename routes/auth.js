@@ -20,9 +20,11 @@ router.post('/login', passport.authenticate('local', { failureRedirect:'/auth/fa
 */
 router.get('/user', (req, res) => {
   if (req.user) {
-    res.json(req.user)
+    let u = req.user
+    res.json(u);
+  } else {
+    res.json({error:'No user found.'});
   }
-  res.json({error:'No user found.'});
 })
 
 

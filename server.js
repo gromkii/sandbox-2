@@ -18,7 +18,12 @@ const express = require('express'),
 app.use(express.static('public'))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({extended:false}))
-  .use(methodOverride('_method'));
+  .use(methodOverride('_method'))
+  .use(session({
+    secret:'hey',
+    resave: false,
+    saveUninitialized: false
+  }));
 
 
 // --- Passport Strategy --- //
