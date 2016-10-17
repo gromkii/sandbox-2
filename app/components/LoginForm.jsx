@@ -14,19 +14,7 @@ class LoginForm extends Component {
     }
   }
 
-  // Checking for logged in users.
   _checkLogin(){
-
-  }
-
-  componentWillMount(){
-
-    /*
-      This will test to see if a user session is already active.
-      For right now, it just reloads their show page, but will
-      change to a menu later.
-    */
-
     $.get('/auth/user')
       .then( results => {
         let u = results;
@@ -35,11 +23,21 @@ class LoginForm extends Component {
           $.get(`/api/users/${u.id}`)
             .then( user => {
               ReactDOM.render(<ShowUser user={user} />, document.getElementById('app'));
-            })
-        } else {
-          console.log('It doesn\'t work.');
+            });
         }
-      })
+      });
+  }
+
+  componentWillMount(){
+
+    /*
+      This will test to see if a user session is already active.
+      For right now, it just reloads their show page, but will
+      change to a menu later. It doesn't need to do anything if
+      there's no current logged in user.
+    */
+
+    this._checkLogin();
   }
 
   // Test to see if there's a user already logged in.
