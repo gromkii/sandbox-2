@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import ShowUser from 'ShowUser'
 import EditUser from 'EditUser'
-import Navbar from 'Navbar'
 
 class LoginForm extends Component {
   constructor(){
@@ -67,8 +66,6 @@ class LoginForm extends Component {
   render(){
     return (
       <section>
-        <Navbar />
-
         <h1 className="text-center">User Login</h1>
 
         <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2"
