@@ -7,7 +7,9 @@ module.exports = {
   resolve:{
     root: __dirname,
     alias: {
-      LoginForm:'./app/components/LoginForm.jsx'
+      LoginForm:'app/components/LoginForm.jsx',
+      ShowUser:'app/components/ShowUser.jsx',
+      EditUser:'app/components/EditUser.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
