@@ -85,6 +85,14 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _ShowUser = __webpack_require__(174);
+
+	var _ShowUser2 = _interopRequireDefault(_ShowUser);
+
+	var _EditUser = __webpack_require__(173);
+
+	var _EditUser2 = _interopRequireDefault(_EditUser);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -123,7 +131,7 @@
 	    value: function _postLogin(data) {
 	      $.post('/auth/login', data).done(function (results) {
 	        if (results.message) {
-	          _reactDom2.default.render(_react2.default.createElement(ShowUser, { user: results.user }), document.getElementById('app'));
+	          _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: results.user }), document.getElementById('app'));
 	        }
 	      });
 	    }
@@ -21584,6 +21592,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _ShowUser = __webpack_require__(174);
+
+	var _ShowUser2 = _interopRequireDefault(_ShowUser);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21649,7 +21661,7 @@
 	      }).done(function (results) {
 
 	        if (results.message) {
-	          _reactDom2.default.render(_react2.default.createElement(ShowUser, { user: results.user }), document.getElementById('app'));
+	          _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: results.user }), document.getElementById('app'));
 	        }
 	      });
 	    }
@@ -21704,129 +21716,6 @@
 
 	  return EditUser;
 	}(_react.Component);
-
-	var NewUser = function (_React$Component) {
-	  _inherits(NewUser, _React$Component);
-
-	  function NewUser() {
-	    _classCallCheck(this, NewUser);
-
-	    return _possibleConstructorReturn(this, (NewUser.__proto__ || Object.getPrototypeOf(NewUser)).apply(this, arguments));
-	  }
-
-	  _createClass(NewUser, [{
-	    key: '_handleSubmit',
-	    value: function _handleSubmit(event) {
-	      event.preventDefault();
-
-	      console.log(event.target);
-
-	      var t = event.target;
-
-	      var data = {
-	        username: t.username.value,
-	        password: t.password.value,
-	        email: t.email.value,
-	        full_name: t.full_name.value,
-	        about_me: t.about_me.value,
-	        profile_url: t.profile_url.value
-	      };
-
-	      console.log(data);
-
-	      $.ajax({
-	        method: 'POST',
-	        url: '/api/users',
-	        data: data
-	      }).done(function (results) {
-	        if (results.user) {
-	          _reactDom2.default.render(_react2.default.createElement(ShowUser, { user: results.user }), document.getElementById('app'));
-	        } else {
-	          console.log('Error!');
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'section',
-	        null,
-	        _react2.default.createElement(
-	          'form',
-	          { className: 'col-md-8 col-md-offset-2', onSubmit: this._handleSubmit.bind(this) },
-	          _react2.default.createElement(
-	            'fieldset',
-	            { className: 'form-group' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Username'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'username' })
-	          ),
-	          _react2.default.createElement(
-	            'fieldset',
-	            { className: 'form-group' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Password'
-	            ),
-	            _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password' })
-	          ),
-	          _react2.default.createElement(
-	            'fieldset',
-	            { className: 'form-group' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Email'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email' })
-	          ),
-	          _react2.default.createElement(
-	            'fieldset',
-	            { className: 'form-group' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Full Name'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'full_name' })
-	          ),
-	          _react2.default.createElement(
-	            'fieldset',
-	            { className: 'form-group' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Profile Image Url'
-	            ),
-	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'profile_url' })
-	          ),
-	          _react2.default.createElement(
-	            'fieldset',
-	            { className: 'form-group' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'About Me'
-	            ),
-	            _react2.default.createElement('textarea', { className: 'form-control', name: 'about_me' })
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'submit', className: 'btn btn-success' },
-	            'Register New Account'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return NewUser;
-	}(_react2.default.Component);
 
 	exports.default = EditUser;
 

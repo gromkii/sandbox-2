@@ -9,7 +9,8 @@ module.exports = {
     alias: {
       LoginForm:'app/components/LoginForm.jsx',
       ShowUser:'app/components/ShowUser.jsx',
-      EditUser:'app/components/EditUser.jsx'
+      EditUser:'app/components/EditUser.jsx',
+      NewUser:'app/components/NewUser.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

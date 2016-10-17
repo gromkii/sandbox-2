@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import ShowUser from 'ShowUser'
+import EditUser from 'EditUser'
 
 class LoginForm extends Component {
   constructor(){
