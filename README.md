@@ -29,3 +29,8 @@ projects with it in the future.
 Having to learn React in such a short amount of time was my main obstacle to overcome
 for this project. The biggest take away from doing all of this was how to store
 information in a react components state, especially from AJAX calls to an API.
+
+## Part Two!
+I wanted to take this additional challenge to actually tidy up a bit, incorporate more of
+what I learned by refactoring my current code. It's nothing over the top, but it complies
+more to how React normally should behave.
