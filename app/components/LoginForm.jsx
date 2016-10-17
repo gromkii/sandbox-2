@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import ShowUser from 'ShowUser'
 import EditUser from 'EditUser'
+import Menu from 'Menu'
 
 class LoginForm extends Component {
   constructor(){
@@ -21,7 +22,7 @@ class LoginForm extends Component {
         if (u.id) {
           $.get(`/api/users/${u.id}`)
             .then( user => {
-              ReactDOM.render(<ShowUser user={user} />, document.getElementById('app'));
+              ReactDOM.render(<Menu user={user} />, document.getElementById('app'));
             });
         }
       });
@@ -54,7 +55,7 @@ class LoginForm extends Component {
     $.post('/auth/login', data)
       .done( results => {
         if(results.message){
-          ReactDOM.render(<ShowUser user = {results.user} />, document.getElementById('app'));
+          ReactDOM.render(<Menu user = {results.user} />, document.getElementById('app'));
         }
       })
   }

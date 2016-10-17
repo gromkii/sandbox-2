@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import EditUser from 'EditUser'
+import Menu from 'Menu'
 
 class ShowUser extends Component {
   constructor(){
@@ -21,28 +22,32 @@ class ShowUser extends Component {
   _getUser(){
     $.ajax({
       method:'GET',
-      url:'/auth/user'
+      url:`/api/users/${this.props.user}`
     }).done( results => {
-      console.log(results);
+      let u = results
+
+      this.setState({
+        user: u,
+        username:u.username,
+        email:u.email,
+        about_me:u.about_me,
+        profile_url:u.profile_url,
+        full_name:u.full_name
+      });
     });
 
   }
 
   componentWillMount(){
-    let u = this.props.user;
-
-    this.setState({
-      user: u,
-      username:u.username,
-      email:u.email,
-      about_me:u.about_me,
-      profile_url:u.profile_url,
-      full_name:u.full_name
-    });
+    let u = this._getUser()
   }
 
   _editProfile(){
     ReactDOM.render(<EditUser user={this.state.user} />, document.getElementById('app'));
+  }
+
+  _goToMenu(){
+    ReactDOM.render(<Menu user={this.state.user} />, document.getElementById('app'));
   }
 
   render(){
@@ -53,11 +58,13 @@ class ShowUser extends Component {
           <h1>{this.state.username}</h1>
           <h3>{this.state.full_name}</h3>
           <p>{this.state.about_me}</p>
+          <button className="btn btn-primary" onClick={this._goToMenu.bind(this)}>Return to Menu</button>
           <button className="btn btn-success" onClick={this._editProfile.bind(this)}>Edit Profile</button>
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>
         </div>
+
 
         </section>
     )

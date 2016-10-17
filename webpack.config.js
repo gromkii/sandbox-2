@@ -12,7 +12,6 @@ module.exports = {
       ShowUser:'app/components/ShowUser.jsx',
       EditUser:'app/components/EditUser.jsx',
       NewUser:'app/components/NewUser.jsx',
-      Navbar:'app/components/Navbar.jsx',
       ListUsers:'app/components/ListUsers.jsx'
     },
     extensions: ['', '.js', '.jsx']

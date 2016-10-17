@@ -55,7 +55,7 @@ class EditUser extends Component {
     }).done( results => {
 
       if(results.message){
-        ReactDOM.render(<ShowUser user={results.user} />, document.getElementById('app'));
+        ReactDOM.render(<ShowUser user={results.user.id} />, document.getElementById('app'));
       }
     })
 
