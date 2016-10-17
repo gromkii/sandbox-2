@@ -10,7 +10,8 @@ module.exports = {
       LoginForm:'app/components/LoginForm.jsx',
       ShowUser:'app/components/ShowUser.jsx',
       EditUser:'app/components/EditUser.jsx',
-      NewUser:'app/components/NewUser.jsx'
+      NewUser:'app/components/NewUser.jsx',
+      Navbar:'app/components/Navbar.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

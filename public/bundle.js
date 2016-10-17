@@ -50,11 +50,11 @@
 
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 
-	var _EditUser = __webpack_require__(173);
+	var _EditUser = __webpack_require__(174);
 
 	var _EditUser2 = _interopRequireDefault(_EditUser);
 
-	var _ShowUser = __webpack_require__(174);
+	var _ShowUser = __webpack_require__(173);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
 
@@ -85,13 +85,17 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _ShowUser = __webpack_require__(174);
+	var _ShowUser = __webpack_require__(173);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
 
-	var _EditUser = __webpack_require__(173);
+	var _EditUser = __webpack_require__(174);
 
 	var _EditUser2 = _interopRequireDefault(_EditUser);
+
+	var _Navbar = __webpack_require__(175);
+
+	var _Navbar2 = _interopRequireDefault(_Navbar);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -146,6 +150,7 @@
 	      return _react2.default.createElement(
 	        'section',
 	        null,
+	        _react2.default.createElement(_Navbar2.default, null),
 	        _react2.default.createElement(
 	          'h1',
 	          { className: 'text-center' },
@@ -21592,7 +21597,136 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _ShowUser = __webpack_require__(174);
+	var _EditUser = __webpack_require__(174);
+
+	var _EditUser2 = _interopRequireDefault(_EditUser);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ShowUser = function (_Component) {
+	  _inherits(ShowUser, _Component);
+
+	  function ShowUser() {
+	    _classCallCheck(this, ShowUser);
+
+	    var _this = _possibleConstructorReturn(this, (ShowUser.__proto__ || Object.getPrototypeOf(ShowUser)).call(this));
+
+	    _this.state = {
+	      user: {},
+	      username: '',
+	      email: '',
+	      about_me: '',
+	      profile_url: '',
+	      full_name: ''
+	    };
+	    return _this;
+	  }
+
+	  _createClass(ShowUser, [{
+	    key: '_getUser',
+	    value: function _getUser() {
+	      $.ajax({
+	        method: 'GET',
+	        url: '/auth/user'
+	      }).done(function (results) {
+	        console.log(results);
+	      });
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var u = this.props.user;
+
+	      this.setState({
+	        user: u,
+	        username: u.username,
+	        email: u.email,
+	        about_me: u.about_me,
+	        profile_url: u.profile_url,
+	        full_name: u.full_name
+	      });
+	    }
+	  }, {
+	    key: '_editProfile',
+	    value: function _editProfile() {
+	      _reactDom2.default.render(_react2.default.createElement(_EditUser2.default, { user: this.state.user }), document.getElementById('app'));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'section',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'text-center' },
+	          'User Profile'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-6 profile' },
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            this.state.username
+	          ),
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            this.state.full_name
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.about_me
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-success', onClick: this._editProfile.bind(this) },
+	            'Edit Profile'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-6' },
+	          _react2.default.createElement('img', { className: 'img-circle pull-right ', src: this.state.profile_url, width: '75%' })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ShowUser;
+	}(_react.Component);
+
+	exports.default = ShowUser;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _ShowUser = __webpack_require__(173);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
 
@@ -21720,7 +21854,7 @@
 	exports.default = EditUser;
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21739,9 +21873,9 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _EditUser = __webpack_require__(173);
+	var _ShowUser = __webpack_require__(173);
 
-	var _EditUser2 = _interopRequireDefault(_EditUser);
+	var _ShowUser2 = _interopRequireDefault(_ShowUser);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21751,102 +21885,49 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ShowUser = function (_Component) {
-	  _inherits(ShowUser, _Component);
+	var Navbar = function (_Component) {
+	  _inherits(Navbar, _Component);
 
-	  function ShowUser() {
-	    _classCallCheck(this, ShowUser);
+	  function Navbar() {
+	    _classCallCheck(this, Navbar);
 
-	    var _this = _possibleConstructorReturn(this, (ShowUser.__proto__ || Object.getPrototypeOf(ShowUser)).call(this));
-
-	    _this.state = {
-	      user: {},
-	      username: '',
-	      email: '',
-	      about_me: '',
-	      profile_url: '',
-	      full_name: ''
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).apply(this, arguments));
 	  }
 
-	  _createClass(ShowUser, [{
-	    key: '_getUser',
-	    value: function _getUser() {
-	      $.ajax({
-	        method: 'GET',
-	        url: '/auth/user'
-	      }).done(function (results) {
-	        console.log(results);
-	      });
-	    }
+	  _createClass(Navbar, [{
+	    key: '_getMyProfile',
+	    value: function _getMyProfile() {}
 	  }, {
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var u = this.props.user;
-
-	      this.setState({
-	        user: u,
-	        username: u.username,
-	        email: u.email,
-	        about_me: u.about_me,
-	        profile_url: u.profile_url,
-	        full_name: u.full_name
-	      });
-	    }
-	  }, {
-	    key: '_editProfile',
-	    value: function _editProfile() {
-	      _reactDom2.default.render(_react2.default.createElement(_EditUser2.default, { user: this.state.user }), document.getElementById('app'));
-	    }
+	    key: '_getAllUsers',
+	    value: function _getAllUsers() {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'section',
-	        { className: 'row' },
+	        'div',
+	        null,
 	        _react2.default.createElement(
-	          'h1',
-	          { className: 'text-center' },
-	          'User Profile'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-md-6 profile' },
+	          'ul',
+	          null,
 	          _react2.default.createElement(
-	            'h1',
+	            'li',
 	            null,
-	            this.state.username
+	            'All Users'
 	          ),
 	          _react2.default.createElement(
-	            'h3',
+	            'li',
 	            null,
-	            this.state.full_name
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            this.state.about_me
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-success', onClick: this._editProfile.bind(this) },
-	            'Edit Profile'
+	            'My Profile'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-md-6' },
-	          _react2.default.createElement('img', { className: 'img-circle pull-right ', src: this.state.profile_url, width: '75%' })
 	        )
 	      );
 	    }
 	  }]);
 
-	  return ShowUser;
+	  return Navbar;
 	}(_react.Component);
 
-	exports.default = ShowUser;
+	exports.default = Navbar;
 
 /***/ }
 /******/ ]);
