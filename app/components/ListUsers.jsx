@@ -24,8 +24,8 @@ class ListUsers extends Component {
       })
   }
 
-  _showUser(id){
-    ReactDOM.render(<ShowUser user={id} />, document.getElementById('app'));
+  _showUser(){
+    ReactDOM.render(<ShowUser user={this.user.id} />, document.getElementById('app'));
   }
 
   render(){

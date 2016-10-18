@@ -20,6 +20,10 @@ class EditUser extends Component {
   }
 
   _getUser(){
+
+  }
+
+  componnetDidMount(){
     $.get(`/api/users/${this.props.user}`)
       .then( results => {
         let u = results
@@ -34,10 +38,6 @@ class EditUser extends Component {
           id:u.id
         });
     });
-  }
-
-  componentWillMount(){
-    this._getUser();
   }
 
   _handleSubmit(event){

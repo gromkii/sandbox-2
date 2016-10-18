@@ -36,4 +36,12 @@ router.route('/fail')
     res.json({error:"Something went wrong."});
   })
 
+router.route('/logout')
+  .get((req, res) => {
+    if (req.user) {
+      req.logout();
+      res.redirect('/');
+    }
+  })
+
 module.exports = router;

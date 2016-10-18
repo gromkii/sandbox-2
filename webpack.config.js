@@ -8,6 +8,7 @@ module.exports = {
     root: __dirname,
     alias: {
       Menu:'app/components/Menu.jsx',
+      Main:'app/components/Main.jsx',
       LoginForm:'app/components/LoginForm.jsx',
       ShowUser:'app/components/ShowUser.jsx',
       EditUser:'app/components/EditUser.jsx',
