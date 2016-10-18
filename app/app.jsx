@@ -18,7 +18,8 @@ render(
       <Route path="register" component={NewUser}/>
       <Route path="menu" component={Menu} />
       <Route path="login" component={LoginForm}/>
-      <Route path="users" component={ListUsers}>
+      <Route path="users" component={Main}>
+        <IndexRoute component={ListUsers}/>
         <Route path=":id" component={ShowUser}/>
         <Route path=":id/edit" component={EditUser}/>
       </Route>

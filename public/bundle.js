@@ -98,7 +98,8 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginForm2.default }),
 	    _react2.default.createElement(
 	      _reactRouter.Route,
-	      { path: 'users', component: _ListUsers2.default },
+	      { path: 'users', component: _Main2.default },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _ListUsers2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _ShowUser2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: ':id/edit', component: _EditUser2.default })
 	    )
@@ -27188,7 +27189,7 @@
 	        var u = results;
 
 	        if (u.id) {
-	          //window.location.href = "/menu";
+	          _reactRouter.hashHistory.push('/menu');
 	        }
 	      });
 	    }
@@ -27216,18 +27217,23 @@
 	        username: e.target.username.value,
 	        password: e.target.password.value
 	      };
-	      this._postLogin(data);
-	    }
-	  }, {
-	    key: '_postLogin',
-	    value: function _postLogin(data) {
-	      $.post('/auth/login', data).done(function (results) {
-	        if (results.message) {
-	          //ReactDOM.render(<Menu user = {results.user} />, document.getElementById('app'));
 
+	      $.post('/auth/login', data).then(function (results) {
+	        if (results.message) {
+	          _reactRouter.hashHistory.push('/users');
 	        }
 	      });
 	    }
+
+	    // _postLogin(data){
+	    //   $.post('/auth/login', data)
+	    //     .done( results => {
+	    //       if(results.message){
+	    //         this.transitionTo('/menu')
+	    //       }
+	    //     })
+	    // }
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -27314,6 +27320,10 @@
 	var _reactDom = __webpack_require__(34);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(172);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 
 	var _EditUser = __webpack_require__(237);
 
@@ -27418,14 +27428,22 @@
 	            this.state.about_me
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-primary', onClick: this._goToMenu.bind(this) },
-	            'Return to Menu'
+	            _reactRouter.Link,
+	            { to: '/menu' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'but btn-primary' },
+	              'Return to Menu'
+	            )
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-success', onClick: this._editProfile.bind(this) },
-	            'Edit Profile'
+	            _reactRouter.Link,
+	            { to: '/users/' + this.state.id + '/edit' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'but btn-success' },
+	              'Edit Profile'
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -27610,6 +27628,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _reactRouter = __webpack_require__(172);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
 	var _ShowUser = __webpack_require__(236);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
@@ -27617,10 +27639,6 @@
 	var _ListUsers = __webpack_require__(239);
 
 	var _ListUsers2 = _interopRequireDefault(_ListUsers);
-
-	var _reactRouter = __webpack_require__(172);
-
-	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27648,21 +27666,25 @@
 	  _createClass(Menu, [{
 	    key: '_getUser',
 	    value: function _getUser() {
-	      var u = this.props.user;
-
-	      $.get('/api/users/' + u.id).then(function (results) {
-	        return results;
+	      $.get('/auth/user').then(function (user) {
+	        $.get('/api/users/' + u.id).then(function (results) {
+	          return results;
+	        });
 	      });
 	    }
 	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var u = this.props.user;
+	      var u = this._getUser();
 
-	      this.setState({
-	        full_name: u.full_name,
-	        id: u.id
-	      });
+	      if (u.id) {
+	        this.setState({
+	          full_name: u.full_name,
+	          id: u.id
+	        });
+	      } else {
+	        _reactRouter.hashHistory.push('/login');
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -27723,6 +27745,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _reactRouter = __webpack_require__(172);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
 	var _ShowUser = __webpack_require__(236);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
@@ -27763,15 +27789,8 @@
 	      });
 	    }
 	  }, {
-	    key: '_showUser',
-	    value: function _showUser() {
-	      _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: this.user.id }), document.getElementById('app'));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
-
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -27794,8 +27813,12 @@
 	              ),
 	              _react2.default.createElement(
 	                'td',
-	                { onClick: _this3._showUser.bind(_this3), value: user.id },
-	                user.username
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/users/' + user.id },
+	                  user.username
+	                )
 	              )
 	            );
 	          })

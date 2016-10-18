@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Router, { Link } from 'react-router'
 import EditUser from 'EditUser'
 import Menu from 'Menu'
 
@@ -60,8 +61,17 @@ class ShowUser extends Component {
           <h1>{this.state.username}</h1>
           <h3>{this.state.full_name}</h3>
           <p>{this.state.about_me}</p>
-          <button className="btn btn-primary" onClick={this._goToMenu.bind(this)}>Return to Menu</button>
-          <button className="btn btn-success" onClick={this._editProfile.bind(this)}>Edit Profile</button>
+          <Link to="/menu">
+            <button className="but btn-primary">
+              Return to Menu
+            </button>
+          </Link>
+
+          <Link to={`/users/${this.state.id}/edit`}>
+            <button className="but btn-success">
+              Edit Profile
+            </button>
+          </Link>
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>

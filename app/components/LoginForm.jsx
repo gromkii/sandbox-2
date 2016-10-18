@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Router,  Redirect, Link } from 'react-router'
+import { Router,  Redirect, Link, hashHistory } from 'react-router'
 import ShowUser from 'ShowUser'
 import EditUser from 'EditUser'
 import Menu from 'Menu'
@@ -21,7 +21,7 @@ class LoginForm extends Component {
         let u = results;
 
         if (u.id) {
-         //window.location.href = "/menu";
+          hashHistory.push('/menu')
         }
       });
   }
@@ -46,18 +46,23 @@ class LoginForm extends Component {
       username: e.target.username.value,
       password: e.target.password.value
     }
-    this._postLogin(data);
-  }
 
-  _postLogin(data){
     $.post('/auth/login', data)
-      .done( results => {
+      .then( results => {
         if(results.message){
-          //ReactDOM.render(<Menu user = {results.user} />, document.getElementById('app'));
-
+          hashHistory.push('/users')
         }
       })
   }
+
+  // _postLogin(data){
+  //   $.post('/auth/login', data)
+  //     .done( results => {
+  //       if(results.message){
+  //         this.transitionTo('/menu')
+  //       }
+  //     })
+  // }
 
   render(){
     return (

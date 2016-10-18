@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Router, { Link, hashHistory } from 'react-router'
 import ShowUser from 'ShowUser'
 import ListUsers from 'ListUsers'
-import Router, { Link } from 'react-router'
 
 class Menu extends Component {
   constructor(){
@@ -15,21 +15,27 @@ class Menu extends Component {
   }
 
   _getUser(){
-    let u = this.props.user
-
-    $.get(`/api/users/${u.id}`)
-      .then(results => {
-        return results;
+    $.get('/auth/user')
+      .then( user => {
+        $.get(`/api/users/${u.id}`)
+        .then(results => {
+          return results;
+        })
       })
   }
 
   componentWillMount(){
-    let u = this.props.user
+    let u = this._getUser()
 
-    this.setState({
-      full_name:u.full_name,
-      id:u.id
-    });
+    if (u.id){
+      this.setState({
+        full_name:u.full_name,
+        id:u.id
+      })
+    } else {
+      hashHistory.push('/login');
+    }
+
   }
 
   render(){

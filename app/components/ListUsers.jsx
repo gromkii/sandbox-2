@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Rouer, { Link } from 'react-router'
 import ShowUser from 'ShowUser'
 
 class ListUsers extends Component {
@@ -24,10 +25,6 @@ class ListUsers extends Component {
       })
   }
 
-  _showUser(){
-    ReactDOM.render(<ShowUser user={this.user.id} />, document.getElementById('app'));
-  }
-
   render(){
     return(
       <div>
@@ -38,7 +35,7 @@ class ListUsers extends Component {
             return(
               <tr>
                 <td>{user.full_name}</td>
-                <td onClick={this._showUser.bind(this)} value={user.id}>{user.username}</td>
+                <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
               </tr>
             )
           })}
