@@ -31,14 +31,22 @@ class ListUsers extends Component {
         <h1>User List</h1>
 
         <table className="table table-striped">
-          {this.state.users.map(user => {
-            return(
-              <tr>
-                <td>{user.full_name}</td>
-                <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
-              </tr>
-            )
-          })}
+          <thead>
+            <th>Username</th>
+            <th>Name</th>
+            <th>About</th>
+          </thead>
+          <tbody>
+            {this.state.users.map(user => {
+              return(
+                <tr key={user.id}>
+                  <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
+                  <td>{user.full_name}</td>
+                  <td>{user.about_me}</td>
+                </tr>
+              )
+            })}
+          </tbody>
         </table>
       </div>
     )

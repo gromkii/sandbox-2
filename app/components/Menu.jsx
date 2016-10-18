@@ -27,10 +27,13 @@ class Menu extends Component {
   componentWillMount(){
     $.get('/auth/user')
       .then( user => {
+        if (!user.id){
+          hashHistory.push('/login')
+        }
+
         $.get(`/api/users/${user.id}`)
           .then(results => {
             let u = results
-
             if (u.id){
               this.setState({
                 full_name:u.full_name,

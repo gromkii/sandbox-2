@@ -18,16 +18,6 @@ class EditUser extends Component {
 
   componentWillMount(){
 
-    // Checks to make sure you are the correct user.
-    
-    $.get('/auth/users')
-      .then( user => {
-        if (user.id != this.props.params.id) {
-          hashHistory.push(`/users/${this.props.params.id}`);
-        }
-      })
-
-
     $.get(`/api/users/${this.props.params.id}`)
       .done( u => {
         this.setState({

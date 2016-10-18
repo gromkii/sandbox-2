@@ -27472,7 +27472,12 @@
 	              'Return to Menu'
 	            )
 	          ),
-	          this._editProfile()
+	          this._editProfile(),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/users' },
+	            'Show User List'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -27544,14 +27549,6 @@
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
 	      var _this2 = this;
-
-	      // Checks to make sure you are the correct user.
-
-	      $.get('/auth/users').then(function (user) {
-	        if (user.id != _this2.props.params.id) {
-	          _reactRouter.hashHistory.push('/users/' + _this2.props.params.id);
-	        }
-	      });
 
 	      $.get('/api/users/' + this.props.params.id).done(function (u) {
 	        _this2.setState({
@@ -27728,9 +27725,12 @@
 	      var _this2 = this;
 
 	      $.get('/auth/user').then(function (user) {
+	        if (!user.id) {
+	          _reactRouter.hashHistory.push('/login');
+	        }
+
 	        $.get('/api/users/' + user.id).then(function (results) {
 	          var u = results;
-
 	          if (u.id) {
 	            _this2.setState({
 	              full_name: u.full_name,
@@ -27858,26 +27858,54 @@
 	        _react2.default.createElement(
 	          'table',
 	          { className: 'table table-striped' },
-	          this.state.users.map(function (user) {
-	            return _react2.default.createElement(
-	              'tr',
+	          _react2.default.createElement(
+	            'thead',
+	            null,
+	            _react2.default.createElement(
+	              'th',
 	              null,
-	              _react2.default.createElement(
-	                'td',
-	                null,
-	                user.full_name
-	              ),
-	              _react2.default.createElement(
-	                'td',
-	                null,
+	              'Username'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Name'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'About'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            this.state.users.map(function (user) {
+	              return _react2.default.createElement(
+	                'tr',
+	                { key: user.id },
 	                _react2.default.createElement(
-	                  _reactRouter.Link,
-	                  { to: '/users/' + user.id },
-	                  user.username
+	                  'td',
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/users/' + user.id },
+	                    user.username
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  user.full_name
+	                ),
+	                _react2.default.createElement(
+	                  'td',
+	                  null,
+	                  user.about_me
 	                )
-	              )
-	            );
-	          })
+	              );
+	            })
+	          )
 	        )
 	      );
 	    }

@@ -100,6 +100,10 @@ class ShowUser extends Component {
           </Link>
 
           {this._editProfile()}
+
+          <Link to="/users">
+            Show User List
+          </Link>
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>
