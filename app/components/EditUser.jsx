@@ -14,24 +14,32 @@ class EditUser extends Component {
       email:'',
       about_me:'',
       profile_url:'',
-      full_name:''
+      full_name:'',
+      id:null
     }
   }
 
-  componentWillMount(){
-    let u = this.props.user;
+  _getUser(){
+    $.get(`/api/users/${this.props.user}`)
+      .done( results => {
+        let u = results
 
-    console.log(u);
+        this.setState({
+          user: u,
+          username:u.username,
+          email:u.email,
+          about_me:u.about_me,
+          profile_url:u.profile_url,
+          full_name:u.full_name,
+          id:u.id
+        });
 
-    this.setState({
-      user: u,
-      username:u.username,
-      email:u.email,
-      about_me:u.about_me,
-      profile_url:u.profile_url,
-      full_name:u.full_name
+        console.log('Done', this.state);
     });
+  }
 
+  componentWillMount(){
+    this._getUser();
   }
 
   _handleChange(event){
@@ -50,7 +58,7 @@ class EditUser extends Component {
 
     $.ajax({
       method:'PUT',
-      url:`/api/users/${this.props.user.id}`,
+      url:`/api/users/${this.props.user}`,
       data:data
     }).done( results => {
 

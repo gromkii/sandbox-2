@@ -8,7 +8,7 @@ class ListUsers extends Component {
   render(){
     return(
       <div>
-        <h1>Hi. :)</h1>
+        <h1>User Lists</h1>
       </div>
     )
   }

@@ -68,6 +68,10 @@
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
 
+	var _NewUser = __webpack_require__(240);
+
+	var _NewUser2 = _interopRequireDefault(_NewUser);
+
 	var _Menu = __webpack_require__(238);
 
 	var _Menu2 = _interopRequireDefault(_Menu);
@@ -78,14 +82,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _reactDom.render)(_react2.default.createElement(
-	  _reactRouter.Router,
-	  null,
-	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _LoginForm2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/users', component: _ListUsers2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/users/:user_id', component: _ShowUser2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/users/:user_id/edit', component: _EditUser2.default })
-	));
+	(0, _reactDom.render)(_react2.default.createElement(_LoginForm2.default, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -27126,6 +27123,8 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _reactRouter = __webpack_require__(172);
+
 	var _ShowUser = __webpack_require__(236);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
@@ -27329,7 +27328,8 @@
 	      email: '',
 	      about_me: '',
 	      profile_url: '',
-	      full_name: ''
+	      full_name: '',
+	      id: null
 	    };
 	    return _this;
 	  }
@@ -27351,7 +27351,8 @@
 	          email: u.email,
 	          about_me: u.about_me,
 	          profile_url: u.profile_url,
-	          full_name: u.full_name
+	          full_name: u.full_name,
+	          id: u.id
 	        });
 	      });
 	    }
@@ -27363,7 +27364,7 @@
 	  }, {
 	    key: '_editProfile',
 	    value: function _editProfile() {
-	      _reactDom2.default.render(_react2.default.createElement(_EditUser2.default, { user: this.state.user }), document.getElementById('app'));
+	      _reactDom2.default.render(_react2.default.createElement(_EditUser2.default, { user: this.state.user.id }), document.getElementById('app'));
 	    }
 	  }, {
 	    key: '_goToMenu',
@@ -27470,26 +27471,37 @@
 	      email: '',
 	      about_me: '',
 	      profile_url: '',
-	      full_name: ''
+	      full_name: '',
+	      id: null
 	    };
 	    return _this;
 	  }
 
 	  _createClass(EditUser, [{
+	    key: '_getUser',
+	    value: function _getUser() {
+	      var _this2 = this;
+
+	      $.get('/api/users/' + this.props.user).done(function (results) {
+	        var u = results;
+
+	        _this2.setState({
+	          user: u,
+	          username: u.username,
+	          email: u.email,
+	          about_me: u.about_me,
+	          profile_url: u.profile_url,
+	          full_name: u.full_name,
+	          id: u.id
+	        });
+
+	        console.log('Done', _this2.state);
+	      });
+	    }
+	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var u = this.props.user;
-
-	      console.log(u);
-
-	      this.setState({
-	        user: u,
-	        username: u.username,
-	        email: u.email,
-	        about_me: u.about_me,
-	        profile_url: u.profile_url,
-	        full_name: u.full_name
-	      });
+	      this._getUser();
 	    }
 	  }, {
 	    key: '_handleChange',
@@ -27508,7 +27520,7 @@
 
 	      $.ajax({
 	        method: 'PUT',
-	        url: '/api/users/' + this.props.user.id,
+	        url: '/api/users/' + this.props.user,
 	        data: data
 	      }).done(function (results) {
 
@@ -27735,7 +27747,7 @@
 	        _react2.default.createElement(
 	          'h1',
 	          null,
-	          'Hi. :)'
+	          'User Lists'
 	        )
 	      );
 	    }
@@ -27745,6 +27757,163 @@
 	}(_react.Component);
 
 	exports.default = ListUsers;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(34);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _ShowUser = __webpack_require__(236);
+
+	var _ShowUser2 = _interopRequireDefault(_ShowUser);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var NewUser = function (_Component) {
+	  _inherits(NewUser, _Component);
+
+	  function NewUser() {
+	    _classCallCheck(this, NewUser);
+
+	    return _possibleConstructorReturn(this, (NewUser.__proto__ || Object.getPrototypeOf(NewUser)).apply(this, arguments));
+	  }
+
+	  _createClass(NewUser, [{
+	    key: '_handleSubmit',
+	    value: function _handleSubmit(event) {
+	      event.preventDefault();
+
+	      console.log(event.target);
+
+	      var t = event.target;
+
+	      var data = {
+	        username: t.username.value,
+	        password: t.password.value,
+	        email: t.email.value,
+	        full_name: t.full_name.value,
+	        about_me: t.about_me.value,
+	        profile_url: t.profile_url.value
+	      };
+
+	      console.log(data);
+
+	      $.ajax({
+	        method: 'POST',
+	        url: '/api/users',
+	        data: data
+	      }).done(function (results) {
+	        if (results.user) {
+	          _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: results.user }), document.getElementById('app'));
+	        } else {
+	          console.log('Error!');
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'section',
+	        null,
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'col-md-8 col-md-offset-2', onSubmit: this._handleSubmit.bind(this) },
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Username'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'username' })
+	          ),
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Password'
+	            ),
+	            _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password' })
+	          ),
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Email'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email' })
+	          ),
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Full Name'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'full_name' })
+	          ),
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Profile Image Url'
+	            ),
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'profile_url' })
+	          ),
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'About Me'
+	            ),
+	            _react2.default.createElement('textarea', { className: 'form-control', name: 'about_me' })
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'submit', className: 'btn btn-success' },
+	            'Register New Account'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return NewUser;
+	}(_react.Component);
+
+	exports.default = NewUser;
 
 /***/ }
 /******/ ]);

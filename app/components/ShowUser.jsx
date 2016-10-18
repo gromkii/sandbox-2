@@ -15,7 +15,8 @@ class ShowUser extends Component {
       email:'',
       about_me:'',
       profile_url:'',
-      full_name:''
+      full_name:'',
+      id:null
     }
   }
 
@@ -32,7 +33,8 @@ class ShowUser extends Component {
         email:u.email,
         about_me:u.about_me,
         profile_url:u.profile_url,
-        full_name:u.full_name
+        full_name:u.full_name,
+        id:u.id
       });
     });
 
@@ -43,7 +45,7 @@ class ShowUser extends Component {
   }
 
   _editProfile(){
-    ReactDOM.render(<EditUser user={this.state.user} />, document.getElementById('app'));
+    ReactDOM.render(<EditUser user={this.state.user.id} />, document.getElementById('app'));
   }
 
   _goToMenu(){
