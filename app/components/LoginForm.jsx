@@ -94,7 +94,4 @@ class LoginForm extends Component {
   }
 }
 
-ReactDOM.render(<LoginForm />, document.getElementById('app'));
-
-
 export default LoginForm

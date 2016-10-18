@@ -88,8 +88,21 @@
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
-	  { history: _reactRouter.hashHistory },
-	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Main2.default })
+	  { hashHistory: _reactRouter.hashHistory },
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/', component: _Main2.default },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _LoginForm2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginForm2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'menu', component: _Menu2.default })
+	  ),
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/users', component: _Main2.default },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _ListUsers2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _ShowUser2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: ':id/edit', component: _EditUser2.default })
+	  )
 	), document.getElementById('app'));
 
 /***/ },
@@ -27282,8 +27295,6 @@
 	  return LoginForm;
 	}(_react.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(LoginForm, null), document.getElementById('app'));
-
 	exports.default = LoginForm;
 
 /***/ },
@@ -27626,9 +27637,6 @@
 	  function Menu() {
 	    _classCallCheck(this, Menu);
 
-	    // Get signed user, add it to menu state.
-
-
 	    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this));
 
 	    _this.state = {
@@ -27965,7 +27973,7 @@
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -27985,8 +27993,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Main = function (_React) {
-	  _inherits(Main, _React);
+	var Main = function (_Component) {
+	  _inherits(Main, _Component);
 
 	  function Main() {
 	    _classCallCheck(this, Main);
@@ -27995,22 +28003,18 @@
 	  }
 
 	  _createClass(Main, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { id: "page" },
-	        _react2.default.createElement(
-	          "h1",
-	          null,
-	          "Hello."
-	        )
+	        'section',
+	        null,
+	        this.props.children
 	      );
 	    }
 	  }]);
 
 	  return Main;
-	}(_react2.default);
+	}(_react.Component);
 
 	exports.default = Main;
 

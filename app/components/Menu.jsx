@@ -7,9 +7,6 @@ class Menu extends Component {
   constructor(){
     super()
 
-    // Get signed user, add it to menu state.
-
-
     this.state = {
       full_name:'',
       id:null

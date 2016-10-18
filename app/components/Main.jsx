@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 
-class Main extends React {
+class Main extends Component {
   render(){
     return (
-      <div id="page">
-        <h1>Hello.</h1>
-      </div>
+      <section>
+        {this.props.children}
+      </section>
     )
   }
 }
+
+
 
 export default Main
