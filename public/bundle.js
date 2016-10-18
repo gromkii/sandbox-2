@@ -27357,7 +27357,7 @@
 	      profile_url: '',
 	      full_name: '',
 	      id: null,
-	      current: null
+	      current: false
 	    };
 	    return _this;
 	  }
@@ -27387,15 +27387,30 @@
 	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this._getUser();
-	      this.setState({
-	        current: this._isCurrentUser()
+	      var store = this;
+	      store._getUser();
+	      $.get('/auth/user').then(function (user) {
+	        if (user.id && user.id === parseInt(store.props.params.id)) {
+	          store.setState({
+	            current: true
+	          });
+	        }
 	      });
 	    }
 	  }, {
 	    key: '_editProfile',
 	    value: function _editProfile() {
-	      _reactDom2.default.render(_react2.default.createElement(_EditUser2.default, { user: this.state.user.id }), document.getElementById('app'));
+	      if (this.state.current) {
+	        return _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/users/' + this.props.params.id + '/edit' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-success' },
+	            'Edit Profile'
+	          )
+	        );
+	      }
 	    }
 	  }, {
 	    key: '_goToMenu',
@@ -27415,8 +27430,10 @@
 	      });
 	    }
 	  }, {
-	    key: '_editUser',
-	    value: function _editUser() {}
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate() {
+	      return true;
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -27455,7 +27472,7 @@
 	              'Return to Menu'
 	            )
 	          ),
-	          this._editUser.bind(this)
+	          this._editProfile()
 	        ),
 	        _react2.default.createElement(
 	          'div',
