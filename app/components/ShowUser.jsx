@@ -23,7 +23,7 @@ class ShowUser extends Component {
   _getUser(){
     $.ajax({
       method:'GET',
-      url:`/api/users/${this.props.user}`
+      url:`/api/users/${this.props.params.id}`
     }).done( results => {
       let u = results
 
@@ -41,7 +41,7 @@ class ShowUser extends Component {
   }
 
   componentWillMount(){
-    let u = this._getUser()
+    this._getUser()
   }
 
   _editProfile(){

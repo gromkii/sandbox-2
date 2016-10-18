@@ -88,20 +88,20 @@
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
-	  { hashHistory: _reactRouter.hashHistory },
+	  { history: _reactRouter.hashHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _Main2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _LoginForm2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _NewUser2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'menu', component: _Menu2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginForm2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: 'menu', component: _Menu2.default })
-	  ),
-	  _react2.default.createElement(
-	    _reactRouter.Route,
-	    { path: '/users', component: _Main2.default },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _ListUsers2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _ShowUser2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: ':id/edit', component: _EditUser2.default })
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: 'users', component: _ListUsers2.default },
+	      _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _ShowUser2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: ':id/edit', component: _EditUser2.default })
+	    )
 	  )
 	), document.getElementById('app'));
 
@@ -27188,9 +27188,7 @@
 	        var u = results;
 
 	        if (u.id) {
-	          $.get('/api/users/' + u.id).then(function (user) {
-	            _reactDom2.default.render(_react2.default.createElement(_Menu2.default, { user: user }), document.getElementById('app'));
-	          });
+	          //window.location.href = "/menu";
 	        }
 	      });
 	    }
@@ -27225,14 +27223,10 @@
 	    value: function _postLogin(data) {
 	      $.post('/auth/login', data).done(function (results) {
 	        if (results.message) {
-	          _reactDom2.default.render(_react2.default.createElement(_Menu2.default, { user: results.user }), document.getElementById('app'));
+	          //ReactDOM.render(<Menu user = {results.user} />, document.getElementById('app'));
+
 	        }
 	      });
-	    }
-	  }, {
-	    key: '_newUser',
-	    value: function _newUser() {
-	      _reactDom2.default.render(_react2.default.createElement(NewUser, null), document.getElementById('app'));
 	    }
 	  }, {
 	    key: 'render',
@@ -27283,9 +27277,13 @@
 	          'div',
 	          { className: 'form-group col-md-8 col-md-offset-2' },
 	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-success form-control', onClick: this._newUser.bind(this) },
-	            'Click here to register!'
+	            _reactRouter.Link,
+	            { to: '/register' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-success form-control' },
+	              'Click here to register!'
+	            )
 	          )
 	        )
 	      );
@@ -27360,7 +27358,7 @@
 
 	      $.ajax({
 	        method: 'GET',
-	        url: '/api/users/' + this.props.user
+	        url: '/api/users/' + this.props.params.id
 	      }).done(function (results) {
 	        var u = results;
 
@@ -27378,7 +27376,7 @@
 	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var u = this._getUser();
+	      this._getUser();
 	    }
 	  }, {
 	    key: '_editProfile',
@@ -27497,14 +27495,11 @@
 	  }
 
 	  _createClass(EditUser, [{
-	    key: '_getUser',
-	    value: function _getUser() {}
-	  }, {
-	    key: 'componnetDidMount',
-	    value: function componnetDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      $.get('/api/users/' + this.props.user).then(function (results) {
+	      $.get('/api/users/' + this.props.params.id).then(function (results) {
 	        var u = results;
 
 	        _this2.setState({
@@ -27623,6 +27618,10 @@
 
 	var _ListUsers2 = _interopRequireDefault(_ListUsers);
 
+	var _reactRouter = __webpack_require__(172);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27656,16 +27655,6 @@
 	      });
 	    }
 	  }, {
-	    key: '_showUserPage',
-	    value: function _showUserPage(id) {
-	      _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: this.state.id }), document.getElementById('app'));
-	    }
-	  }, {
-	    key: '_showUserList',
-	    value: function _showUserList() {
-	      _reactDom2.default.render(_react2.default.createElement(_ListUsers2.default, null), document.getElementById('app'));
-	    }
-	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
 	      var u = this.props.user;
@@ -27688,14 +27677,22 @@
 	          this.state.full_name
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'btn btn-success', onClick: this._showUserPage.bind(this) },
-	          'Show My Page'
+	          'h2',
+	          null,
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/users/' + this.state.id },
+	            'My Profile'
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'btn btn-success', onClick: this._showUserList.bind(this) },
-	          'Show User List'
+	          'h2',
+	          null,
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/users' },
+	            'Show All Users'
+	          )
 	        )
 	      );
 	    }

@@ -19,12 +19,8 @@ class EditUser extends Component {
     }
   }
 
-  _getUser(){
-
-  }
-
-  componnetDidMount(){
-    $.get(`/api/users/${this.props.user}`)
+  componentWillMount(){
+    $.get(`/api/users/${this.props.params.id}`)
       .then( results => {
         let u = results
 

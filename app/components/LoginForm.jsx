@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Router,  Redirect } from 'react-router'
+import { Router,  Redirect, Link } from 'react-router'
 import ShowUser from 'ShowUser'
 import EditUser from 'EditUser'
 import Menu from 'Menu'
@@ -21,10 +21,7 @@ class LoginForm extends Component {
         let u = results;
 
         if (u.id) {
-          $.get(`/api/users/${u.id}`)
-            .then( user => {
-              ReactDOM.render(<Menu user={user} />, document.getElementById('app'));
-            });
+         //window.location.href = "/menu";
         }
       });
   }
@@ -56,13 +53,10 @@ class LoginForm extends Component {
     $.post('/auth/login', data)
       .done( results => {
         if(results.message){
-          ReactDOM.render(<Menu user = {results.user} />, document.getElementById('app'));
+          //ReactDOM.render(<Menu user = {results.user} />, document.getElementById('app'));
+
         }
       })
-  }
-
-  _newUser(){
-    ReactDOM.render(<NewUser />, document.getElementById('app'));
   }
 
   render(){
@@ -87,7 +81,11 @@ class LoginForm extends Component {
         </form>
 
         <div className="form-group col-md-8 col-md-offset-2">
-          <button className="btn btn-success form-control" onClick={this._newUser.bind(this)}>Click here to register!</button>
+          <Link to="/register">
+            <button className="btn btn-success form-control">
+              Click here to register!
+            </button>
+          </Link>
         </div>
       </section>
     )

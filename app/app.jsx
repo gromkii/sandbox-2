@@ -12,19 +12,17 @@ import Main from 'Main'
 import ListUsers from 'ListUsers'
 
 render(
-  <Router hashHistory={hashHistory}>
+  <Router history={hashHistory}>
     <Route path="/" component={Main}>
       <IndexRoute component={LoginForm}/>
+      <Route path="register" component={NewUser}/>
+      <Route path="menu" component={Menu} />
       <Route path="login" component={LoginForm}/>
-      <Route path="menu" component={Menu}/>
+      <Route path="users" component={ListUsers}>
+        <Route path=":id" component={ShowUser}/>
+        <Route path=":id/edit" component={EditUser}/>
+      </Route>
     </Route>
-
-    <Route path="/users" component={Main}>
-      <IndexRoute component={ListUsers}/>
-      <Route path=":id" component={ShowUser}/>
-      <Route path=":id/edit" component={EditUser}/>
-    </Route>
-
   </Router>,
 
   document.getElementById('app')

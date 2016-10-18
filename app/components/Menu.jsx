@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import ShowUser from 'ShowUser'
 import ListUsers from 'ListUsers'
+import Router, { Link } from 'react-router'
 
 class Menu extends Component {
   constructor(){
@@ -22,14 +23,6 @@ class Menu extends Component {
       })
   }
 
-  _showUserPage(id){
-    ReactDOM.render(<ShowUser user={this.state.id} />, document.getElementById('app'));
-  }
-
-  _showUserList(){
-    ReactDOM.render(<ListUsers />, document.getElementById('app'));
-  }
-
   componentWillMount(){
     let u = this.props.user
 
@@ -44,8 +37,8 @@ class Menu extends Component {
       <div>
         <h1>Welcome back, {this.state.full_name}</h1>
 
-        <button className="btn btn-success" onClick={this._showUserPage.bind(this)}>Show My Page</button>
-        <button className="btn btn-success" onClick={this._showUserList.bind(this)}>Show User List</button>
+        <h2><Link to={`/users/${this.state.id}`}>My Profile</Link></h2>
+        <h2><Link to="/users">Show All Users</Link></h2>
       </div>
     )
   }
