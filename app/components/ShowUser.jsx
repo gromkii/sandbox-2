@@ -61,12 +61,14 @@ class ShowUser extends Component {
     $.get('/auth/user')
       .then(user => {
         if (user.id && user.id == parseInt(this.props.params.id)) {
-          console.log('True');
           return true
         }
-        console.log('False');
         return false
       })
+  }
+
+  _editUser(){
+    
   }
 
   render(){
@@ -82,6 +84,8 @@ class ShowUser extends Component {
               Return to Menu
             </button>
           </Link>
+
+          {this._editUser.bind(this)}
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>

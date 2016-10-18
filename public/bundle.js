@@ -27409,13 +27409,14 @@
 
 	      $.get('/auth/user').then(function (user) {
 	        if (user.id && user.id == parseInt(_this3.props.params.id)) {
-	          console.log('True');
 	          return true;
 	        }
-	        console.log('False');
 	        return false;
 	      });
 	    }
+	  }, {
+	    key: '_editUser',
+	    value: function _editUser() {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -27453,7 +27454,8 @@
 	              { className: 'but btn-primary' },
 	              'Return to Menu'
 	            )
-	          )
+	          ),
+	          this._editUser.bind(this)
 	        ),
 	        _react2.default.createElement(
 	          'div',
