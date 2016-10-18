@@ -27771,6 +27771,15 @@
 	            { to: '/users' },
 	            'Show All Users'
 	          )
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/auth/logout' },
+	            'Logout'
+	          )
 	        )
 	      );
 	    }
@@ -27840,8 +27849,6 @@
 	        _this2.setState({
 	          users: results
 	        });
-
-	        console.log(_this2.state);
 	      });
 	    }
 	  }, {
@@ -27906,6 +27913,11 @@
 	              );
 	            })
 	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/menu' },
+	          'Return to Menu'
 	        )
 	      );
 	    }
@@ -27935,6 +27947,10 @@
 	var _reactDom = __webpack_require__(34);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(172);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 
 	var _ShowUser = __webpack_require__(236);
 
@@ -27983,7 +27999,7 @@
 	        data: data
 	      }).done(function (results) {
 	        if (results.user) {
-	          _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: results.user }), document.getElementById('app'));
+	          _reactRouter.hashHistory.push('/login');
 	        } else {
 	          console.log('Error!');
 	        }
@@ -28062,6 +28078,15 @@
 	            'button',
 	            { type: 'submit', className: 'btn btn-success' },
 	            'Register New Account'
+	          ),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/login' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-primary' },
+	              'Return to Login'
+	            )
 	          )
 	        )
 	      );

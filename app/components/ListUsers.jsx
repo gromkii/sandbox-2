@@ -20,8 +20,6 @@ class ListUsers extends Component {
         this.setState({
           users:results
         })
-
-        console.log(this.state);
       })
   }
 
@@ -48,6 +46,10 @@ class ListUsers extends Component {
             })}
           </tbody>
         </table>
+
+        <Link to='/menu'>
+          Return to Menu
+        </Link>
       </div>
     )
   }

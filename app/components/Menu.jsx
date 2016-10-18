@@ -53,6 +53,7 @@ class Menu extends Component {
 
         <h2><Link to={`/users/${this.state.id}`}>My Profile</Link></h2>
         <h2><Link to="/users">Show All Users</Link></h2>
+        <h2><a href="/auth/logout">Logout</a></h2>
       </div>
     )
   }

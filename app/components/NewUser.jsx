@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Router, { Link, hashHistory } from 'react-router'
 import ShowUser from 'ShowUser'
 
 class NewUser extends Component {
@@ -30,7 +31,7 @@ class NewUser extends Component {
       data:data
     }).done(results => {
       if (results.user) {
-        ReactDOM.render(<ShowUser user={results.user} />, document.getElementById('app'));
+        hashHistory.push('/login')
       } else {
         console.log('Error!');
       }
@@ -69,6 +70,12 @@ class NewUser extends Component {
           <button type="submit" className="btn btn-success">
             Register New Account
           </button>
+
+          <Link to="/login">
+            <button className="btn btn-primary">
+              Return to Login
+            </button>
+          </Link>
         </form>
       </section>
     )
