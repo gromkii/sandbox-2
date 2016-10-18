@@ -27482,7 +27482,7 @@
 	    value: function _getUser() {
 	      var _this2 = this;
 
-	      $.get('/api/users/' + this.props.user).done(function (results) {
+	      $.get('/api/users/' + this.props.user).then(function (results) {
 	        var u = results;
 
 	        _this2.setState({
@@ -27494,8 +27494,6 @@
 	          full_name: u.full_name,
 	          id: u.id
 	        });
-
-	        console.log('Done', _this2.state);
 	      });
 	    }
 	  }, {
@@ -27503,9 +27501,6 @@
 	    value: function componentWillMount() {
 	      this._getUser();
 	    }
-	  }, {
-	    key: '_handleChange',
-	    value: function _handleChange(event) {}
 	  }, {
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(event) {
@@ -27735,19 +27730,64 @@
 	  function ListUsers() {
 	    _classCallCheck(this, ListUsers);
 
-	    return _possibleConstructorReturn(this, (ListUsers.__proto__ || Object.getPrototypeOf(ListUsers)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (ListUsers.__proto__ || Object.getPrototypeOf(ListUsers)).call(this));
+
+	    _this.state = {
+	      users: []
+	    };
+	    return _this;
 	  }
 
 	  _createClass(ListUsers, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+
+	      $.get('/api/users').then(function (results) {
+	        _this2.setState({
+	          users: results
+	        });
+
+	        console.log(_this2.state);
+	      });
+	    }
+	  }, {
+	    key: '_showUser',
+	    value: function _showUser(id) {
+	      _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: id }), document.getElementById('app'));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'h1',
 	          null,
-	          'User Lists'
+	          'User List'
+	        ),
+	        _react2.default.createElement(
+	          'table',
+	          { className: 'table table-striped' },
+	          this.state.users.map(function (user) {
+	            return _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                user.full_name
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                { onClick: _this3._showUser.bind(_this3), value: user.id },
+	                user.username
+	              )
+	            );
+	          })
 	        )
 	      );
 	    }

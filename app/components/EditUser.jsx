@@ -21,7 +21,7 @@ class EditUser extends Component {
 
   _getUser(){
     $.get(`/api/users/${this.props.user}`)
-      .done( results => {
+      .then( results => {
         let u = results
 
         this.setState({
@@ -33,17 +33,11 @@ class EditUser extends Component {
           full_name:u.full_name,
           id:u.id
         });
-
-        console.log('Done', this.state);
     });
   }
 
   componentWillMount(){
     this._getUser();
-  }
-
-  _handleChange(event){
-
   }
 
   _handleSubmit(event){
@@ -76,6 +70,7 @@ class EditUser extends Component {
           <fieldset className="form-group">
             <label>Change Name</label>
             <input type="text" className="form-control" defaultValue={this.state.full_name} name="full_name"/>
+
           </fieldset>
 
           <fieldset className="form-group">
