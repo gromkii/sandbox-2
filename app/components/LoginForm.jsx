@@ -50,7 +50,7 @@ class LoginForm extends Component {
     $.post('/auth/login', data)
       .then( results => {
         if(results.message){
-          hashHistory.push('/users')
+          hashHistory.push('/menu')
         }
       })
   }

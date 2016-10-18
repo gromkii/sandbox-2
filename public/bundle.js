@@ -27220,7 +27220,7 @@
 
 	      $.post('/auth/login', data).then(function (results) {
 	        if (results.message) {
-	          _reactRouter.hashHistory.push('/users');
+	          _reactRouter.hashHistory.push('/menu');
 	        }
 	      });
 	    }
@@ -27356,7 +27356,8 @@
 	      about_me: '',
 	      profile_url: '',
 	      full_name: '',
-	      id: null
+	      id: null,
+	      current: null
 	    };
 	    return _this;
 	  }
@@ -27387,6 +27388,9 @@
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
 	      this._getUser();
+	      this.setState({
+	        current: this._isCurrentUser()
+	      });
 	    }
 	  }, {
 	    key: '_editProfile',
@@ -27397,6 +27401,20 @@
 	    key: '_goToMenu',
 	    value: function _goToMenu() {
 	      _reactDom2.default.render(_react2.default.createElement(_Menu2.default, { user: this.state.user }), document.getElementById('app'));
+	    }
+	  }, {
+	    key: '_isCurrentUser',
+	    value: function _isCurrentUser() {
+	      var _this3 = this;
+
+	      $.get('/auth/user').then(function (user) {
+	        if (user.id && user.id == parseInt(_this3.props.params.id)) {
+	          console.log('True');
+	          return true;
+	        }
+	        console.log('False');
+	        return false;
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -27434,15 +27452,6 @@
 	              'button',
 	              { className: 'but btn-primary' },
 	              'Return to Menu'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/users/' + this.state.id + '/edit' },
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'but btn-success' },
-	              'Edit Profile'
 	            )
 	          )
 	        ),
@@ -27667,7 +27676,7 @@
 	    key: '_getUser',
 	    value: function _getUser() {
 	      $.get('/auth/user').then(function (user) {
-	        $.get('/api/users/' + u.id).then(function (results) {
+	        $.get('/api/users/' + user.id).then(function (results) {
 	          return results;
 	        });
 	      });
@@ -27675,16 +27684,22 @@
 	  }, {
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var u = this._getUser();
+	      var _this2 = this;
 
-	      if (u.id) {
-	        this.setState({
-	          full_name: u.full_name,
-	          id: u.id
+	      $.get('/auth/user').then(function (user) {
+	        $.get('/api/users/' + user.id).then(function (results) {
+	          var u = results;
+
+	          if (u.id) {
+	            _this2.setState({
+	              full_name: u.full_name,
+	              id: u.id
+	            });
+	          } else {
+	            _reactRouter.hashHistory.push('/login');
+	          }
 	        });
-	      } else {
-	        _reactRouter.hashHistory.push('/login');
-	      }
+	      });
 	    }
 	  }, {
 	    key: 'render',

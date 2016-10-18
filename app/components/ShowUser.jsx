@@ -17,7 +17,8 @@ class ShowUser extends Component {
       about_me:'',
       profile_url:'',
       full_name:'',
-      id:null
+      id:null,
+      current:null
     }
   }
 
@@ -43,6 +44,9 @@ class ShowUser extends Component {
 
   componentWillMount(){
     this._getUser()
+    this.setState({
+      current: this._isCurrentUser()
+    })
   }
 
   _editProfile(){
@@ -51,6 +55,18 @@ class ShowUser extends Component {
 
   _goToMenu(){
     ReactDOM.render(<Menu user={this.state.user} />, document.getElementById('app'));
+  }
+
+  _isCurrentUser(){
+    $.get('/auth/user')
+      .then(user => {
+        if (user.id && user.id == parseInt(this.props.params.id)) {
+          console.log('True');
+          return true
+        }
+        console.log('False');
+        return false
+      })
   }
 
   render(){
@@ -66,19 +82,11 @@ class ShowUser extends Component {
               Return to Menu
             </button>
           </Link>
-
-          <Link to={`/users/${this.state.id}/edit`}>
-            <button className="but btn-success">
-              Edit Profile
-            </button>
-          </Link>
         </div>
         <div className="col-md-6">
           <img className="img-circle pull-right " src={this.state.profile_url} width="75%"/>
         </div>
-
-
-        </section>
+      </section>
     )
   }
 }

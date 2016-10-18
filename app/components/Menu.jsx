@@ -17,25 +17,30 @@ class Menu extends Component {
   _getUser(){
     $.get('/auth/user')
       .then( user => {
-        $.get(`/api/users/${u.id}`)
+        $.get(`/api/users/${user.id}`)
         .then(results => {
-          return results;
+          return results
         })
       })
   }
 
   componentWillMount(){
-    let u = this._getUser()
+    $.get('/auth/user')
+      .then( user => {
+        $.get(`/api/users/${user.id}`)
+          .then(results => {
+            let u = results
 
-    if (u.id){
-      this.setState({
-        full_name:u.full_name,
-        id:u.id
+            if (u.id){
+              this.setState({
+                full_name:u.full_name,
+                id:u.id
+              })
+            } else {
+              hashHistory.push('/login');
+            }
+        })
       })
-    } else {
-      hashHistory.push('/login');
-    }
-
   }
 
   render(){
