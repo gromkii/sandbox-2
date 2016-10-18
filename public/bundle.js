@@ -27508,6 +27508,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _reactRouter = __webpack_require__(172);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
 	var _ShowUser = __webpack_require__(236);
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
@@ -27529,13 +27533,9 @@
 	    var _this = _possibleConstructorReturn(this, (EditUser.__proto__ || Object.getPrototypeOf(EditUser)).call(this));
 
 	    _this.state = {
-	      user: {},
-	      username: '',
-	      email: '',
 	      about_me: '',
 	      profile_url: '',
-	      full_name: '',
-	      id: null
+	      full_name: ''
 	    };
 	    return _this;
 	  }
@@ -27545,42 +27545,55 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 
-	      $.get('/api/users/' + this.props.params.id).then(function (results) {
-	        var u = results;
+	      // Checks to make sure you are the correct user.
 
+	      $.get('/auth/users').then(function (user) {
+	        if (user.id != _this2.props.params.id) {
+	          _reactRouter.hashHistory.push('/users/' + _this2.props.params.id);
+	        }
+	      });
+
+	      $.get('/api/users/' + this.props.params.id).done(function (u) {
 	        _this2.setState({
-	          user: u,
-	          username: u.username,
-	          email: u.email,
-	          about_me: u.about_me,
-	          profile_url: u.profile_url,
 	          full_name: u.full_name,
-	          id: u.id
+	          about_me: u.about_me,
+	          profile_url: u.profile_url
 	        });
 	      });
 	    }
 	  }, {
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(event) {
+	      var _this3 = this;
+
 	      event.preventDefault();
 	      var t = event.target;
 
+	      console.log(t.about_me.value, this.state.about_me);
+
 	      var data = {
-	        full_name: t.full_name.value,
-	        about_me: t.about_me.value,
-	        profile_url: t.profile_url.value
+	        full_name: t.full_name.value ? t.full_name.value : this.state.full_name,
+	        about_me: t.about_me.value ? t.about_me.value : this.state.about_me,
+	        profile_url: t.profile_url.value ? t.profile_url.value : this.state.profile_url
 	      };
+
+	      console.log(data);
 
 	      $.ajax({
 	        method: 'PUT',
-	        url: '/api/users/' + this.props.user,
+	        url: '/api/users/' + this.props.params.id,
 	        data: data
 	      }).done(function (results) {
 
 	        if (results.message) {
-	          _reactDom2.default.render(_react2.default.createElement(_ShowUser2.default, { user: results.user.id }), document.getElementById('app'));
+	          _reactRouter.hashHistory.push('/users/' + _this3.props.params.id);
 	        }
 	      });
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate() {
+	      return true;
 	    }
 	  }, {
 	    key: 'render',
@@ -27599,7 +27612,7 @@
 	              null,
 	              'Change Name'
 	            ),
-	            _react2.default.createElement('input', { type: 'text', className: 'form-control', defaultValue: this.state.full_name, name: 'full_name' })
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: this.state.full_name, name: 'full_name' })
 	          ),
 	          _react2.default.createElement(
 	            'fieldset',
@@ -27609,7 +27622,7 @@
 	              null,
 	              'Change About Me'
 	            ),
-	            _react2.default.createElement('textarea', { className: 'form-control', defaultValue: this.state.about_me, name: 'about_me' })
+	            _react2.default.createElement('textarea', { className: 'form-control', placeholder: this.state.about_me, name: 'about_me' })
 	          ),
 	          _react2.default.createElement(
 	            'fieldset',
@@ -27619,12 +27632,21 @@
 	              null,
 	              'Change Image Url'
 	            ),
-	            _react2.default.createElement('input', { type: 'text', className: 'form-control', defaultValue: this.state.profile_url, name: 'profile_url' })
+	            _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: this.state.profile_url, name: 'profile_url' })
 	          ),
 	          _react2.default.createElement(
 	            'button',
-	            { type: 'submit', className: 'btn btn-lg btn-primary' },
+	            { type: 'submit', className: 'btn btn-primary' },
 	            'Update Information'
+	          ),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/users/' + this.props.params.id },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-success pull-right' },
+	              'Return to Profile'
+	            )
 	          )
 	        )
 	      );
