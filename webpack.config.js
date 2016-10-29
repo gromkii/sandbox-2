@@ -1,5 +1,20 @@
+var webpack = require('webpack');
+
 module.exports = {
-  entry: './app/app.jsx',
+  entry: [
+    'script!jquery/dist/jquery.min.js',
+    'script!bootstrap/dist/js/boostrap.min.js',
+    './app/app.jsx',
+  ],
+  externals: {
+    jquery:'jQuery'
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      '$':'jquery',
+      'jQuery':'jquery'
+    })
+  ],
   output: {
     path: __dirname,
     filename: './public/bundle.js'
@@ -7,6 +22,7 @@ module.exports = {
   resolve:{
     root: __dirname,
     alias: {
+      applicationStyles:'public/stylesheets/style.scss',
       Menu:'app/components/Menu.jsx',
       Main:'app/components/Main.jsx',
       LoginForm:'app/components/LoginForm.jsx',

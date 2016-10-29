@@ -4,7 +4,6 @@ import { Router,  Redirect, Link, hashHistory } from 'react-router'
 import ShowUser from 'ShowUser'
 import EditUser from 'EditUser'
 import Menu from 'Menu'
-
 class LoginForm extends Component {
   constructor(){
     super()
