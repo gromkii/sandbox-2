@@ -3,11 +3,13 @@ var webpack = require('webpack');
 module.exports = {
   entry: [
     'script!jquery/dist/jquery.min.js',
-    'script!bootstrap/dist/js/boostrap.min.js',
+    'bootstrap-loader',
+    'script!axios/dist/axios.min.js',
     './app/app.jsx',
   ],
   externals: {
-    jquery:'jQuery'
+    jquery:'jQuery',
+    axios:'axios'
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -41,6 +43,10 @@ module.exports = {
       },
       test:/\.jsx?$/,
       exclude:/(node_modules|bower_components)/
-    }]
+    }, {
+      test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+      loader: 'file-loader',
+    }
+  ]
   }
 }

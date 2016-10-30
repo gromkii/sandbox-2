@@ -11,7 +11,6 @@ import Menu from 'Menu'
 import Main from 'Main'
 import ListUsers from 'ListUsers'
 
-require('style!css!bootstrap/dist/css/boostrap.min.css');
 
 require('style!css!sass!applicationStyles');
 
