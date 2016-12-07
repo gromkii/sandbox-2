@@ -15,15 +15,13 @@ class LoginForm extends Component {
   }
 
   _checkLogin(){
-    axios.get('/auth/user')
+    $.get('/auth/user')
       .then( results => {
         let u = results;
 
         if (u.id) {
           hashHistory.push('/menu')
         }
-      }).catch( error => {
-        console.log(error);
       });
   }
 
@@ -48,12 +46,12 @@ class LoginForm extends Component {
       password: e.target.password.value
     }
 
-    axios.post('/auth/login', data)
+    $.post('/auth/login', data)
       .then( results => {
         if(results.message){
           hashHistory.push('/menu')
         }
-      })
+      });
   }
 
   render(){

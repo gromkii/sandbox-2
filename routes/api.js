@@ -21,6 +21,7 @@ router.route('/users')
 
     User.forge({
       username:newUser.username,
+      full_name:newUser.full_name,
       email:newUser.email,
       profile_url:newUser.profile_url,
       password: hash,

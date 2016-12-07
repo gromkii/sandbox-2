@@ -8,11 +8,7 @@ import ShowUser from 'ShowUser'
 class NewUser extends Component {
   _handleSubmit(event){
     event.preventDefault();
-
-    console.log(event.target);
-
     let t = event.target;
-
 
     let data = {
       username:t.username.value,
@@ -23,18 +19,13 @@ class NewUser extends Component {
       profile_url:t.profile_url.value,
     }
 
-    console.log(data);
-
     $.ajax({
       method:'POST',
       url:'/api/users',
       data:data
-    }).done(results => {
-      if (results.user) {
-        hashHistory.push('/login')
-      } else {
-        console.log('Error!');
-      }
+    }).then(results => {
+
+      hashHistory.push('/login')
     })
   }
 

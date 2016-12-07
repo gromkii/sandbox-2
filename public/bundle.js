@@ -2967,7 +2967,7 @@
 
 	var _ShowUser2 = _interopRequireDefault(_ShowUser);
 
-	var _NewUser = __webpack_require__(271);
+	var _NewUser = __webpack_require__(272);
 
 	var _NewUser2 = _interopRequireDefault(_NewUser);
 
@@ -2975,7 +2975,7 @@
 
 	var _Menu2 = _interopRequireDefault(_Menu);
 
-	var _Main = __webpack_require__(272);
+	var _Main = __webpack_require__(273);
 
 	var _Main2 = _interopRequireDefault(_Main);
 
@@ -2985,7 +2985,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(273);
+	__webpack_require__(274);
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -30030,7 +30030,7 @@
 /* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -30086,14 +30086,12 @@
 	  _createClass(LoginForm, [{
 	    key: '_checkLogin',
 	    value: function _checkLogin() {
-	      axios.get('/auth/user').then(function (results) {
+	      $.get('/auth/user').then(function (results) {
 	        var u = results;
 
 	        if (u.id) {
 	          _reactRouter.hashHistory.push('/menu');
 	        }
-	      }).catch(function (error) {
-	        console.log(error);
 	      });
 	    }
 	  }, {
@@ -30121,7 +30119,7 @@
 	        password: e.target.password.value
 	      };
 
-	      axios.post('/auth/login', data).then(function (results) {
+	      $.post('/auth/login', data).then(function (results) {
 	        if (results.message) {
 	          _reactRouter.hashHistory.push('/menu');
 	        }
@@ -30193,6 +30191,7 @@
 	}(_react.Component);
 
 	exports.default = LoginForm;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ },
 /* 267 */
@@ -30826,7 +30825,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ },
-/* 271 */
+/* 271 */,
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -30874,9 +30874,6 @@
 	    key: '_handleSubmit',
 	    value: function _handleSubmit(event) {
 	      event.preventDefault();
-
-	      console.log(event.target);
-
 	      var t = event.target;
 
 	      var data = {
@@ -30888,18 +30885,13 @@
 	        profile_url: t.profile_url.value
 	      };
 
-	      console.log(data);
-
 	      $.ajax({
 	        method: 'POST',
 	        url: '/api/users',
 	        data: data
-	      }).done(function (results) {
-	        if (results.user) {
-	          _reactRouter.hashHistory.push('/login');
-	        } else {
-	          console.log('Error!');
-	        }
+	      }).then(function (results) {
+
+	        _reactRouter.hashHistory.push('/login');
 	      });
 	    }
 	  }, {
@@ -30997,7 +30989,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31046,13 +31038,13 @@
 	exports.default = Main;
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(274);
+	var content = __webpack_require__(275);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(14)(content, {});
@@ -31072,7 +31064,7 @@
 	}
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(8)();
