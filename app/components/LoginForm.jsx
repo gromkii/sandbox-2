@@ -11,6 +11,7 @@ class LoginForm extends Component {
     this.state = {
       username:'',
       password:'',
+      error:false
     }
   }
 
@@ -47,14 +48,38 @@ class LoginForm extends Component {
     $.post('/auth/login', data)
       .then( results => {
         if(results.message) {
+          this.setState({
+            error:false
+          })
           hashHistory.push('/menu')
+        } else if (results.error) {
+          this.setState({
+            error:true
+          });
         }
       });
   }
 
   render(){
+    var userMessage = null;
+
+    if (this.state.error) {
+      userMessage = (
+        <div className="alert alert-danger" role="alert">
+          <span className="glyphicon glyphicon-exclamation-sign"></span>
+          <span className="sr-only">Error:</span>
+          Invalid Username/Password Password
+      </div>
+      )
+    } else {
+      userMessage = null;
+    }
+
+
     return (
       <section>
+
+
         <h1 className="text-center">User Login</h1>
 
         <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2"
@@ -67,6 +92,7 @@ class LoginForm extends Component {
             <label>Password</label>
             <input type="password" name="password" className="form-control"/>
           </fieldset>
+          {userMessage}
           <fieldset className="form-group">
             <button type="submit" className="btn btn-primary form-control">Login</button>
           </fieldset>

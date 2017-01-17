@@ -4,7 +4,7 @@ module.exports = {
   entry: [
     'script!jquery/dist/jquery.min.js',
     'bootstrap-loader',
-    'script!axios/dist/axios.min.js',
+    'script!axios/dist/axios.js',
     './app/app.jsx',
   ],
   externals: {
