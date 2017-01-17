@@ -10,7 +10,7 @@ class LoginForm extends Component {
 
     this.state = {
       username:'',
-      password:''
+      password:'',
     }
   }
 
@@ -18,7 +18,6 @@ class LoginForm extends Component {
     $.get('/auth/user')
       .then( results => {
         let u = results;
-
         if (u.id) {
           hashHistory.push('/menu')
         }
@@ -33,7 +32,6 @@ class LoginForm extends Component {
       change to a menu later. It doesn't need to do anything if
       there's no current logged in user.
     */
-
     this._checkLogin();
   }
 
@@ -48,7 +46,7 @@ class LoginForm extends Component {
 
     $.post('/auth/login', data)
       .then( results => {
-        if(results.message){
+        if(results.message) {
           hashHistory.push('/menu')
         }
       });
