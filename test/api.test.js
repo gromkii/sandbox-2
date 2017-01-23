@@ -4,7 +4,6 @@ var expect  = require('chai').expect,
     knex    = require('../db/knex'),
     should  = require('should');
 
-
 describe('Testing Connection', () => {
   before(done => {
     knex.migrate.latest()

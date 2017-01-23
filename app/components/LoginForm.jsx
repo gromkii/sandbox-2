@@ -86,11 +86,11 @@ class LoginForm extends Component {
           onSubmit={this._handleSubmit.bind(this)}>
           <fieldset className="form-group">
             <label>Username</label>
-            <input type="text" name="username" className="form-control"/>
+            <input type="text" name="username" ref="username" className="form-control"/>
           </fieldset>
           <fieldset className="form-group">
             <label>Password</label>
-            <input type="password" name="password" className="form-control"/>
+            <input type="password" name="password" ref="password" className="form-control"/>
           </fieldset>
           {userMessage}
           <fieldset className="form-group">
