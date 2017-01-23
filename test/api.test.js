@@ -4,7 +4,7 @@ var expect  = require('chai').expect,
     knex    = require('../db/knex'),
     should  = require('should');
 
-describe('Testing Connection', () => {
+describe('API', () => {
   before(done => {
     knex.migrate.latest()
       .then( () => {
@@ -22,7 +22,7 @@ describe('Testing Connection', () => {
       })
   })
 
-  it('Should connect to the api.', done => {
+  it('should connect to the api.', done => {
     request
       .get('/')
       .expect(200)
@@ -32,7 +32,7 @@ describe('Testing Connection', () => {
       })
   })
 
-  it('Should return seeded users.', done => {
+  it('should return seeded users.', done => {
     // According to the seed file, there should be 3 users.
     request
       .get('/api/users')
@@ -44,7 +44,7 @@ describe('Testing Connection', () => {
       })
   })
 
-  it('Should return a specific user', done => {
+  it('should return a specific user', done => {
     request
       .get('/api/users/1')
       .expect(200)
@@ -58,7 +58,7 @@ describe('Testing Connection', () => {
       })
   })
 
-  it('Should post a new user', done => {
+  it('should post a new user', done => {
     let data = {
       username:'Test',
       email:'testing@test.com',
@@ -81,6 +81,67 @@ describe('Testing Connection', () => {
             expect(users.length).to.eq(4);
             done();
           })
-      })
-  })
-})
+      });
+  });
+  describe('Login', () => {
+    it('should login with correct credentials', done => {
+      let data = {
+        username:'met2002',
+        password:'test'
+      };
+
+      request
+        .post('/auth/login')
+        .send(data)
+        .expect(200)
+        .end( (err, res) => {
+          let data = res.body.message;
+
+          expect(data).to.eq('Did the thing.');
+          done();
+        });
+
+    });
+
+    it('should redirect to /fail if incorrect credentials', done => {
+      let data = {
+        username:'Nick',
+        password:'Cage'
+      };
+
+      request
+        .post('/auth/login')
+        .send(data)
+        .expect(302)
+        .end((err, res) => {
+          let data = res.header;
+
+          expect(data.location).to.eq('/auth/fail');
+          done();
+        });
+    });
+
+    it('should send error message if incorrect credentials', done => {
+      let data = {
+        username:'Nick',
+        password:'Cage'
+      };
+
+      request
+        .post('/auth/login')
+        .send(data)
+        .expect(302)
+        .end((err, res) => {
+          request
+            .get(res.header.location) //Should be 'fail' from previous test!
+            .expect(200)
+            .end((err, res) => {
+              let data = res.body;
+
+              expect(data.error).to.eq('Something went wrong.');
+              done();
+            })
+        });
+    });
+  });
+});
