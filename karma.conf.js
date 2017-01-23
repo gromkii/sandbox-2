@@ -21,6 +21,10 @@ module.exports = function(config) {
     webpack:webpackConfig,
     webpackServer: {
       noInfo: true
+    },
+    proxies: {
+      '/auth':'http://localhost:3000/auth',
+      '/api':'http://localhost:3000/api'
     }
   });
 };

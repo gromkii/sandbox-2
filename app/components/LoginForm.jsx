@@ -13,6 +13,8 @@ class LoginForm extends Component {
       password:'',
       error:false
     }
+
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   _checkLogin(){
@@ -41,8 +43,8 @@ class LoginForm extends Component {
   _handleSubmit(e){
     e.preventDefault();
     let data = {
-      username: e.target.username.value,
-      password: e.target.password.value
+      username: this.refs.username.value,
+      password: this.refs.password.value
     }
 
     $.post('/auth/login', data)
@@ -83,7 +85,7 @@ class LoginForm extends Component {
         <h1 className="text-center">User Login</h1>
 
         <form action="/auth/login" method="post" className="form col-md-8 col-md-offset-2"
-          onSubmit={this._handleSubmit.bind(this)}>
+          onSubmit={this._handleSubmit} id="loginForm">
           <fieldset className="form-group">
             <label>Username</label>
             <input type="text" name="username" ref="username" className="form-control"/>

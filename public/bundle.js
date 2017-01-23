@@ -30141,6 +30141,8 @@
 	      password: '',
 	      error: false
 	    };
+
+	    _this._handleSubmit = _this._handleSubmit.bind(_this);
 	    return _this;
 	  }
 
@@ -30176,8 +30178,8 @@
 
 	      e.preventDefault();
 	      var data = {
-	        username: e.target.username.value,
-	        password: e.target.password.value
+	        username: this.refs.username.value,
+	        password: this.refs.password.value
 	      };
 
 	      $.post('/auth/login', data).then(function (results) {
@@ -30225,7 +30227,7 @@
 	        _react2.default.createElement(
 	          'form',
 	          { action: '/auth/login', method: 'post', className: 'form col-md-8 col-md-offset-2',
-	            onSubmit: this._handleSubmit.bind(this) },
+	            onSubmit: this._handleSubmit, id: 'loginForm' },
 	          _react2.default.createElement(
 	            'fieldset',
 	            { className: 'form-group' },
@@ -30234,7 +30236,7 @@
 	              null,
 	              'Username'
 	            ),
-	            _react2.default.createElement('input', { type: 'text', name: 'username', className: 'form-control' })
+	            _react2.default.createElement('input', { type: 'text', name: 'username', ref: 'username', className: 'form-control' })
 	          ),
 	          _react2.default.createElement(
 	            'fieldset',
@@ -30244,7 +30246,7 @@
 	              null,
 	              'Password'
 	            ),
-	            _react2.default.createElement('input', { type: 'password', name: 'password', className: 'form-control' })
+	            _react2.default.createElement('input', { type: 'password', name: 'password', ref: 'password', className: 'form-control' })
 	          ),
 	          userMessage,
 	          _react2.default.createElement(
